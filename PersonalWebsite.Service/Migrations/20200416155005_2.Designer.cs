@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalWebsite.Service;
 
 namespace PersonalWebsite.Service.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200416155005_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,12 +79,10 @@ namespace PersonalWebsite.Service.Migrations
 
             modelBuilder.Entity("PersonalWebsite.Service.Entity.AdminUserRolesEntity", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<long>("AdminUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateDateTime")
@@ -91,15 +91,13 @@ namespace PersonalWebsite.Service.Migrations
                     b.Property<DateTime>("DeletedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdminUserId");
+                    b.HasKey("AdminUserId", "RoleId");
 
                     b.HasIndex("RoleId");
 

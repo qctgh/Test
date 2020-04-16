@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using PersonalWebsite.Service.Entities;
+using PersonalWebsite.Service.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,6 @@ namespace PersonalWebsite.Service
 
         public DbSet<UserEntity> UserEntities { get; set; }
         public DbSet<ArticleEntity> ArticleEntities { get; set; }
-
         public DbSet<ChannelEntity> ChannelEntities { get; set; }
 
         //public MyDbContext(DbContextOptions<MyDbContext> options)
@@ -32,18 +31,19 @@ namespace PersonalWebsite.Service
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-            //    .Where(q => q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) != null);
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(q => q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) != null);
 
-            //foreach (var type in typesToRegister)
-            //{
+            foreach (var type in typesToRegister)
+            {
 
-            //    dynamic configurationInstance = Activator.CreateInstance(type);
-            //    modelBuilder.ApplyConfiguration(configurationInstance);
-            //}
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.ApplyConfiguration(configurationInstance);
+            }
 
-            Assembly asmServices = Assembly.Load(new AssemblyName("PersonalWebsite.Service.Services"));
-            modelBuilder.ApplyConfigurationsFromAssembly(asmServices);
+            //Assembly asmServices = Assembly.Load(new AssemblyName("PersonalWebsite.Service"));
+            //modelBuilder.ApplyConfigurationsFromAssembly(asmServices);
+            //modelBuilder.Entity<ArticleEntity>().ToTable("T_Articles");
         }
 
     }

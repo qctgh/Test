@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalWebsite.IService;
 using PersonalWebsite.Service;
-using PersonalWebsite.Service.Services;
 
 namespace PersonalWebsite.Web
 {
@@ -33,8 +32,8 @@ namespace PersonalWebsite.Web
 
             //services.AddDbContext<MyDbContext>(options =>
             //options.UseSqlServer(Configuration.GetConnectionString("Database")));
-            //services.AddDbContextPool<MyDbContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("Database")));
+            services.AddDbContextPool<MyDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             //services.AddSingleton<IArticleService>();
 

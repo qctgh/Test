@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalWebsite.Service.Entities
+namespace PersonalWebsite.Service.Entity
 {
     public class ArticleEntity : BaseEntity
     {

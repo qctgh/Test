@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalWebsite.Service;
 
 namespace PersonalWebsite.Service.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200416144120_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,37 +75,6 @@ namespace PersonalWebsite.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_AdminUsers");
-                });
-
-            modelBuilder.Entity("PersonalWebsite.Service.Entity.AdminUserRolesEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("AdminUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeletedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdminUserId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("T_AdminUserRoles");
                 });
 
             modelBuilder.Entity("PersonalWebsite.Service.Entity.ArticleEntity", b =>
@@ -223,7 +194,7 @@ namespace PersonalWebsite.Service.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_KeyValues");
+                    b.ToTable("T_IdNames");
                 });
 
             modelBuilder.Entity("PersonalWebsite.Service.Entity.PermissionEntity", b =>
@@ -280,37 +251,6 @@ namespace PersonalWebsite.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_Roles");
-                });
-
-            modelBuilder.Entity("PersonalWebsite.Service.Entity.RolePermissionsEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreateDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeletedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("T_RolePermissions");
                 });
 
             modelBuilder.Entity("PersonalWebsite.Service.Entity.SettingEntity", b =>
@@ -386,21 +326,6 @@ namespace PersonalWebsite.Service.Migrations
                     b.ToTable("T_Users");
                 });
 
-            modelBuilder.Entity("PersonalWebsite.Service.Entity.AdminUserRolesEntity", b =>
-                {
-                    b.HasOne("PersonalWebsite.Service.Entity.AdminUserEntity", "AdminUser")
-                        .WithMany("AdminUserRoles")
-                        .HasForeignKey("AdminUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PersonalWebsite.Service.Entity.RoleEntity", "Role")
-                        .WithMany("AdminUserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PersonalWebsite.Service.Entity.ArticleEntity", b =>
                 {
                     b.HasOne("PersonalWebsite.Service.Entity.ChannelEntity", "Channel")
@@ -412,21 +337,6 @@ namespace PersonalWebsite.Service.Migrations
                     b.HasOne("PersonalWebsite.Service.Entity.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PersonalWebsite.Service.Entity.RolePermissionsEntity", b =>
-                {
-                    b.HasOne("PersonalWebsite.Service.Entity.PermissionEntity", "Permission")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PersonalWebsite.Service.Entity.RoleEntity", "Role")
-                        .WithMany("RolesPermissions")
-                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
