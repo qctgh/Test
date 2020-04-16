@@ -13,7 +13,7 @@ namespace PersonalWebsite.Service
     {
 
         public DbSet<UserEntity> UserEntities { get; set; }
-        public DbSet<ArticleEntity> ArticleEntities { get; set; }
+        public DbSet<ArticleEntity> ArticleEntities { get; set; } 
         public DbSet<ChannelEntity> ChannelEntities { get; set; }
 
         //public MyDbContext(DbContextOptions<MyDbContext> options)
