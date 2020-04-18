@@ -32,8 +32,8 @@ namespace PersonalWebsite.Web
 
             //services.AddDbContext<MyDbContext>(options =>
             //options.UseSqlServer(Configuration.GetConnectionString("Database")));
-            services.AddDbContextPool<MyDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Database")));
+            //services.AddDbContextPool<MyDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             //services.AddSingleton<IArticleService>();
 

@@ -21,6 +21,6 @@ namespace PersonalWebsite.Service.Entity
         /// <summary>
         /// 删除时间
         /// </summary>
-        public DateTime DeletedDateTime { get; set; } = DateTime.Now;
+        public DateTime? DeletedDateTime { get; set; } = DateTime.Now;
     }
 }

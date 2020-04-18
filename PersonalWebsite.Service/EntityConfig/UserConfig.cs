@@ -15,6 +15,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
             builder.Property(p => p.PasswordHash).IsRequired().HasMaxLength(100);
             builder.Property(p => p.PasswordSalt).IsRequired().HasMaxLength(20);
             builder.Property(p => p.PhoneNum).IsRequired().HasMaxLength(20).IsUnicode(false);
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

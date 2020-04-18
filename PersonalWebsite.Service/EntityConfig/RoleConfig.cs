@@ -18,6 +18,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Ignore(p => p.AdminUsers);
             builder.Ignore(p => p.Permissions);
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

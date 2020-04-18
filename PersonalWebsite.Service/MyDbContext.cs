@@ -12,9 +12,14 @@ namespace PersonalWebsite.Service
     public class MyDbContext : DbContext
     {
 
-        public DbSet<UserEntity> UserEntities { get; set; }
-        public DbSet<ArticleEntity> ArticleEntities { get; set; }
-        public DbSet<ChannelEntity> ChannelEntities { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<ArticleEntity> Articles { get; set; }
+        public DbSet<ChannelEntity> Channels { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
+        public DbSet<SettingEntity> Settings { get; set; }
+        public DbSet<AdminUserEntity> AdminUsers { get; set; }
+        public DbSet<KeyValueEntity> KeyValues { get; set; }
+        public DbSet<PermissionEntity> Permissions { get; set; }
 
         //public MyDbContext(DbContextOptions<MyDbContext> options)
         //: base(options)
@@ -40,10 +45,6 @@ namespace PersonalWebsite.Service
                 dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.ApplyConfiguration(configurationInstance);
             }
-
-            //Assembly asmServices = Assembly.Load(new AssemblyName("PersonalWebsite.Service"));
-            //modelBuilder.ApplyConfigurationsFromAssembly(asmServices);
-            //modelBuilder.Entity<ArticleEntity>().ToTable("T_Articles");
         }
 
     }

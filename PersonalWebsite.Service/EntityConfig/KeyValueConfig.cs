@@ -14,6 +14,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
             builder.ToTable("T_KeyValues");
             builder.Property(p => p.Key).IsRequired().HasMaxLength(1024);
             builder.Property(p => p.Value).IsRequired().HasMaxLength(1024);
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

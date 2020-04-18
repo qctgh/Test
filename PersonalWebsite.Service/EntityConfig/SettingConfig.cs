@@ -14,6 +14,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
             builder.ToTable("T_Settings");
             builder.Property(p => p.Name).IsRequired().HasMaxLength(1024);
             builder.Property(p => p.Value).IsRequired();
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }

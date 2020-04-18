@@ -17,6 +17,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
 
             builder.HasOne(p => p.AdminUser).WithMany(p => p.AdminUserRoles).HasForeignKey(p => p.AdminUserId);
             builder.HasOne(p => p.Role).WithMany(p => p.AdminUserRoles).HasForeignKey(p => p.RoleId);
+            builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }
 }
