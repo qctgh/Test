@@ -23,6 +23,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\res\images\other\" />
+  </ItemGroup>
+
 
 
 </Project>

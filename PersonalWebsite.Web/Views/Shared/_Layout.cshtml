@@ -1,48 +1,99 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PersonalWebsite.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PersonalWebsite.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewBag.Title</title>
+    <link href="/res/layui/css/layui.css" rel="stylesheet" />
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - PersonalWebsite.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+</head>
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div>
+                <a class="layui-logo" href="/Home/Index">Todo369 &middot; 3.0</a>
+            </div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="">控制台</a></li>
+                <li class="layui-nav-item"><a href="">商品管理</a></li>
+                <li class="layui-nav-item"><a href="">用户</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">邮件管理</a></dd>
+                        <dd><a href="">消息管理</a></dd>
+                        <dd><a href="">授权管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <!--登录分部页-->
+            @Html.Partial("_LoginPartial")
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">社区管理</a>
+                        <dl class="layui-nav-child">
+                            @*<dd><a href="/Admin/Home/PostArticle?action=addnew">发表文章</a></dd>*@
+                            <dd>@Html.ActionLink("文章管理", "ArticleMgr")</dd>
+                            <dd>@Html.ActionLink("评论管理", "ModComments")</dd>
+                            <dd>@Html.ActionLink("过滤词管理", "FilterWordsMgr")</dd>
+                            <dd>@Html.ActionLink("频道管理", "ChannelMgr")</dd>
+                            <dd>@Html.ActionLink("广告管理", "AdMgr")</dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">系统管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="@Url.Content("~/Setting/List")">配置管理</a></dd>
+                            <dd><a href="@Url.Content("~/KeyValue/List")">字典管理</a></dd>
+                            <dd><a href="@Url.Content("~/User/List")">用户管理</a></dd>
+                            <dd><a href="@Url.Content("~/AdminUser/List")">后台用户管理</a></dd>
+                            <dd><a href="@Url.Content("~/Role/List")">角色管理</a></dd>
+                            <dd><a href="@Url.Content("~/Permission/List")">权限管理</a></dd>
+                            @*<dd><a href="@Url.Content("~/Permission/List")">资源管理</a></dd>*@
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">云市场</a></li>
+                    <li class="layui-nav-item"><a href="">发布商品</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div id="content" style="padding: 15px;">
+                @RenderBody()
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <script src="/res/layui/layui.js"></script>
+    @RenderSection("scripts", false)
+    <script>
+        //JavaScript代码区域
+        //layui.use(['element'], function () {
+        //    var element = layui.element;
+
+        //});
+        layui.config({
+            version: "3.0.0"
+            , base: '/res/mods/'
+        }).extend({
+            fly: 'index'
+        }).use('fly');
+    </script>
 </body>
 </html>
