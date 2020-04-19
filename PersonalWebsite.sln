@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.Web", "PersonalWebsite.Web\PersonalWebsite.Web.csproj", "{81BBE1AB-AA0E-46B9-9CB9-8412DC29100D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.Web", "PersonalWebsite.Web\PersonalWebsite.Web.csproj", "{81BBE1AB-AA0E-46B9-9CB9-8412DC29100D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.IService", "PersonalWebsite.IService\PersonalWebsite.IService.csproj", "{3F7ACD0B-D643-4C60-8C56-93AA721A8D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.IService", "PersonalWebsite.IService\PersonalWebsite.IService.csproj", "{3F7ACD0B-D643-4C60-8C56-93AA721A8D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.Service", "PersonalWebsite.Service\PersonalWebsite.Service.csproj", "{5466918A-AA95-4CCC-9AFD-9314D4AF3BBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.Service", "PersonalWebsite.Service\PersonalWebsite.Service.csproj", "{5466918A-AA95-4CCC-9AFD-9314D4AF3BBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.Helper", "PersonalWebsite.Helper\PersonalWebsite.Helper.csproj", "{81AD92B9-AB6D-47AF-B07A-ED7B9BE7FEC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.Helper", "PersonalWebsite.Helper\PersonalWebsite.Helper.csproj", "{81AD92B9-AB6D-47AF-B07A-ED7B9BE7FEC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.DTO", "PersonalWebsite.DTO\PersonalWebsite.DTO.csproj", "{36F16110-DD61-4E2B-860D-993199FE99D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.DTO", "PersonalWebsite.DTO\PersonalWebsite.DTO.csproj", "{36F16110-DD61-4E2B-860D-993199FE99D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.AdminWeb", "PersonalWebsite.AdminWeb\PersonalWebsite.AdminWeb.csproj", "{151CA772-E4D9-42AF-98AA-FA4396E31293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

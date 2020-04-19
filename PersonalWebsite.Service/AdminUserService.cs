@@ -12,8 +12,7 @@ namespace PersonalWebsite.Service
 {
     public class AdminUserService : IAdminUserService
     {
-        public long AddAdminUser(string name, string phoneNum,
-            string password, string email, long? cityId)
+        public long AddAdminUser(string name, string phoneNum, string password, string email, long? cityId)
         {
             AdminUserEntity user = new AdminUserEntity();
             user.Email = email;

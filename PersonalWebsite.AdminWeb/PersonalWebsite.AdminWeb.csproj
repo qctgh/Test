@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalWebsite.DTO\PersonalWebsite.DTO.csproj" />
+    <ProjectReference Include="..\PersonalWebsite.Helper\PersonalWebsite.Helper.csproj" />
+    <ProjectReference Include="..\PersonalWebsite.IService\PersonalWebsite.IService.csproj" />
+    <ProjectReference Include="..\PersonalWebsite.Service\PersonalWebsite.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\res\images\other\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+
+</Project>
