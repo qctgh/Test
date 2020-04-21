@@ -47,12 +47,12 @@ namespace PersonalWebsite.AdminWeb.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Result() { Code = 1, Msg = "请填写角色" });
+                return Json(new Result() { Code = 1, Msg = "数据验证未通过" });
             }
             long roleId = RoleService.AddNew(model.Name);
             //给角色添加权限
             //permService.AddPermIds(roleId, model.PermissionIds);
-            return View(new Result() { Code = 0, Msg = "保存成功" });
+            return Json(new Result() { Code = 0, Msg = "保存成功" });
         }
     }
 }

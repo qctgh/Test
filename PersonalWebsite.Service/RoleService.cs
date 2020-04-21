@@ -55,7 +55,7 @@ namespace PersonalWebsite.Service
             dto.CreateDateTime = en.CreateDateTime;
             dto.Id = en.Id;
             dto.Name = en.Name;
-            dto.IsDeleted = en.IsDeleted;
+            dto.IsDeleted = en.IsDeleted ? "是" : "否";
             dto.DeletedDateTime = en.DeletedDateTime;
             return dto;
         }

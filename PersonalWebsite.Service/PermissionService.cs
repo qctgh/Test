@@ -54,6 +54,7 @@ namespace ZSZ.Service
             dto.Description = p.Description;
             dto.Id = p.Id;
             dto.Name = p.Name;
+            dto.IsDeleted = p.IsDeleted ? "是" : "否";
             return dto;
         }
 

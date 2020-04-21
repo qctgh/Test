@@ -63,7 +63,7 @@ namespace PersonalWebsite.Service
             dto.LoginErrorTimes = user.LoginErrorTimes;
             dto.Name = user.Name;
             dto.PhoneNum = user.PhoneNum;
-            dto.IsDeleted = user.IsDeleted;
+            dto.IsDeleted = user.IsDeleted ? "是" : "否";
             dto.DeletedDateTime = user.DeletedDateTime;
             return dto;
         }
