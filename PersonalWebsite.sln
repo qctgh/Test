@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.Helper", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.DTO", "PersonalWebsite.DTO\PersonalWebsite.DTO.csproj", "{36F16110-DD61-4E2B-860D-993199FE99D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsite.AdminWeb", "PersonalWebsite.AdminWeb\PersonalWebsite.AdminWeb.csproj", "{151CA772-E4D9-42AF-98AA-FA4396E31293}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite.AdminWeb", "PersonalWebsite.AdminWeb\PersonalWebsite.AdminWeb.csproj", "{23B3EF5E-7CCF-4F63-9C76-CAE63FE6C516}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36F16110-DD61-4E2B-860D-993199FE99D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{151CA772-E4D9-42AF-98AA-FA4396E31293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B3EF5E-7CCF-4F63-9C76-CAE63FE6C516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B3EF5E-7CCF-4F63-9C76-CAE63FE6C516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B3EF5E-7CCF-4F63-9C76-CAE63FE6C516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B3EF5E-7CCF-4F63-9C76-CAE63FE6C516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

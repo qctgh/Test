@@ -1,8 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>PersonalWebsite.AdminWeb</AssemblyName>
+    <RootNamespace>PersonalWebsite.AdminWeb</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PersonalWebsite.DTO\PersonalWebsite.DTO.csproj" />
@@ -12,20 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\res\images\other\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Views\Shared\_Layout.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
-
+  <ItemGroup>
+    <Folder Include="wwwroot\res\images\other\" />
+  </ItemGroup>
 
 </Project>
