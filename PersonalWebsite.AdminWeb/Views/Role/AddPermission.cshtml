@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "AddPermission";
+    Layout = "_LayoutPopups";
+}
+@section toolbar{
+
+    <button type="button" class="layui-btn" lay-demotransferactive="getData">保存</button>
+}
+
+<div id="mytransfer" class="demo-transfer"></div>
+@section scripts{
+    <script>
+        layui.config({
+            base: '/res/layui/lay/modules/'
+        }).use(['transfer', 'layer', 'util'], function () {
+            var $ = layui.$
+                , transfer = layui.transfer
+                , layer = layui.layer
+                , util = layui.util;
+            //模拟数据
+            var data1 = @Html.Raw(ViewBag.Permissions);
+
+            //显示搜索框
+            transfer.render({
+                elem: '#mytransfer'
+                , id: 'key123'
+                , width: 300
+                , height: 400
+                , data: data1
+                , title: ['所有权限', '已有权限']
+                , showSearch: true
+            })
+
+            //批量办法定事件
+            util.event('lay-demoTransferActive', {
+                getData: function (othis) {
+                    var getData = transfer.getData('key123'); //获取右侧数据
+
+                    layer.confirm('确认保存?', {icon: 1, title:'提示'},function(index){
+                      //do something
+                        $.ajax({
+                            url: "@Url.Content("~/Role/AddPermission")",
+                            type: "post",
+                            data: {roleId:'@ViewBag.RoleId',getData:JSON.stringify(getData)},
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.code == 0) {
+                                    layer.alert(res.msg);
+                                    window.location.reload();
+                                }
+                                else {
+                                    layer.alert(res.msg);
+                                }
+                            },
+                            error: function () { alert("请求出错"); }
+                        });
+                      layer.close(index);
+                    });
+                }
+                , reload: function () {
+                    //实例重载
+                    transfer.reload('key123', {
+                        title: ['文人', '喜欢的文人']
+                        , value: ['2', '5', '9']
+                        , showSearch: true
+                    })
+                }
+            });
+
+        });
+    </script>
+}

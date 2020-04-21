@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PersonalWebsite.AdminWeb.Models;
 using PersonalWebsite.IService;
 
@@ -11,10 +12,12 @@ namespace PersonalWebsite.AdminWeb.Controllers
     public class RoleController : Controller
     {
         protected IRoleService RoleService { get; set; }
+        protected IPermissionService PermissionService { get; set; }
 
-        public RoleController(IRoleService RoleService)
+        public RoleController(IRoleService RoleService, IPermissionService PermissionService)
         {
             this.RoleService = RoleService;
+            this.PermissionService = PermissionService;
         }
 
         public IActionResult Index()
@@ -54,5 +57,31 @@ namespace PersonalWebsite.AdminWeb.Controllers
             //permService.AddPermIds(roleId, model.PermissionIds);
             return Json(new Result() { Code = 0, Msg = "保存成功" });
         }
+        [HttpGet]
+        public IActionResult AddPermission(string roleId)
+        {
+            ViewBag.RoleId = roleId;
+            var permissions = PermissionService.GetAll();
+            var pmsList = from f in permissions
+                          select new
+                          {
+                              value = f.Id,
+                              title = f.Name
+                          };
+            ViewBag.Permissions = JsonConvert.SerializeObject(pmsList);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddPermission(string roleId, string getData)
+        {
+
+            var data = JsonConvert.DeserializeObject<List<JsonModel>>(getData);
+            //从集合中筛选出value的值
+            long[] pmsIds = data.Select(p => p.Value).ToArray();
+            PermissionService.AddPermIds(long.Parse(roleId), pmsIds);
+
+            return Json(null);
+        }
+
     }
 }

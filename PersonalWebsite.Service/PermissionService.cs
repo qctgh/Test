@@ -4,6 +4,7 @@ using System.Linq;
 using PersonalWebsite.DTO;
 using PersonalWebsite.Service.Entity;
 using PersonalWebsite.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace ZSZ.Service
 {
@@ -32,7 +33,7 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                var role = ctx.Permissions.SingleOrDefault(p => p.Id.Equals(roleId));
+                var role = ctx.Roles.Include(p => p.Permissions).SingleOrDefault(p => p.Id.Equals(roleId));
                 if (role == null)
                 {
                     throw new ArgumentException("roleId不存在" + roleId);
@@ -41,7 +42,7 @@ namespace ZSZ.Service
                 var perms = ctx.Permissions.Where(p => permIds.Contains(p.Id)).ToArray();
                 foreach (var perm in perms)
                 {
-                    ctx.Permissions.Add(perm);
+                    role.Permissions.Add(perm);
                 }
                 ctx.SaveChanges();
             }
