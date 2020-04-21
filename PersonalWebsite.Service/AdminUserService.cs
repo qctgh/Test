@@ -63,6 +63,8 @@ namespace PersonalWebsite.Service
             dto.LoginErrorTimes = user.LoginErrorTimes;
             dto.Name = user.Name;
             dto.PhoneNum = user.PhoneNum;
+            dto.IsDeleted = user.IsDeleted;
+            dto.DeletedDateTime = user.DeletedDateTime;
             return dto;
         }
 
@@ -71,7 +73,6 @@ namespace PersonalWebsite.Service
             using (MyDbContext ctx = new MyDbContext())
             {
                 //using System.Data.Entity;才能在IQueryable中用Include、AsNoTracking
-
                 return ctx.AdminUsers.AsNoTracking().ToList().Select(u => ToDTO(u)).ToArray();
             }
         }

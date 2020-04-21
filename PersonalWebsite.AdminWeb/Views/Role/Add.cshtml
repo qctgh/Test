@@ -1,0 +1,59 @@
+﻿@model RoleAddModel
+@{
+    ViewData["Title"] = "添加角色";
+}
+@section toolbar{
+    <h3>添加角色</h3>
+}
+<form id="form1" class="layui-form" asp-action="Add" asp-controller="Role" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Name" lay-verify="required" autocomplete="off" placeholder="请输入角色" class="layui-input">
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+            <label class="layui-form-label">权限</label>
+            <div class="layui-input-block">
+                <input type="text" asp-for="PermissionIds" lay-verify="title" autocomplete="off" placeholder="请输入权限" class="layui-input">
+            </div>
+        </div>*@
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="submit" type="button" class="layui-btn" lay-submit="">保存</button>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        layui.use(['layer','jquery'], function () {
+            var layer = layui.layer
+                , jquery = layui.jquery;
+            var $ = layui.$;
+
+            $("#submit").click(function () {
+                var formData = $("#form1").serializeArray();
+                $.ajax({
+                    url: "@Url.Content("~/Role/Add")",
+                    type: "post",
+                    data: formData,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+                            window.location.reload();
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    },
+                    error: function () { alert("请求出错"); }
+                });
+            });
+
+        });
+
+    </script>
+}

@@ -96,12 +96,12 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">系统管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="@Url.Content("~/Setting/List")">配置管理</a></dd>
-                            <dd><a href="@Url.Content("~/KeyValue/List")">字典管理</a></dd>
-                            <dd><a href="@Url.Content("~/User/List")">用户管理</a></dd>
-                            <dd><a href="@Url.Content("~/AdminUser/List")">后台用户管理</a></dd>
-                            <dd><a href="@Url.Content("~/Role/List")">角色管理</a></dd>
-                            <dd><a href="@Url.Content("~/Permission/List")">权限管理</a></dd>
+                            <dd class="@(ViewBag.Title == "配置管理"?"layui-this":"")"><a href="@Url.Content("~/Setting/List")">配置管理</a></dd>
+                            <dd class="@(ViewBag.Title == "字典管理"?"layui-this":"")"><a href="@Url.Content("~/KeyValue/List")">字典管理</a></dd>
+                            <dd class="@(ViewBag.Title == "用户管理"?"layui-this":"")"><a href="@Url.Content("~/User/List")">用户管理</a></dd>
+                            <dd class="@(ViewBag.Title == "后台用户管理"?"layui-this":"")"><a href="@Url.Content("~/AdminUser/List")">后台用户管理</a></dd>
+                            <dd class="@(ViewBag.Title == "角色管理"?"layui-this":"")"><a href="@Url.Content("~/Role/List")">角色管理</a></dd>
+                            <dd class="@(ViewBag.Title == "权限管理"?"layui-this":"")"><a href="@Url.Content("~/Permission/List")">权限管理</a></dd>
                             @*<dd><a href="@Url.Content("~/Permission/List")">资源管理</a></dd>*@
                         </dl>
                     </li>

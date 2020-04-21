@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PersonalWebsite.DTO;
 using PersonalWebsite.IService;
-using PersonalWebsite.Service;
 using PersonalWebsite.Service.Entity;
 
-namespace ZSZ.Service
+namespace PersonalWebsite.Service
 {
     public class RoleService : IRoleService
     {
@@ -55,6 +55,8 @@ namespace ZSZ.Service
             dto.CreateDateTime = en.CreateDateTime;
             dto.Id = en.Id;
             dto.Name = en.Name;
+            dto.IsDeleted = en.IsDeleted;
+            dto.DeletedDateTime = en.DeletedDateTime;
             return dto;
         }
 
@@ -62,7 +64,7 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                return ctx.Roles.Select(p => ToDTO(p)).ToArray();
+                return ctx.Roles.AsNoTracking().ToList().Select(p => ToDTO(p)).ToArray();
             }
         }
 
