@@ -30,7 +30,7 @@
 </script>
 <table class="layui-hide" id="myTable" lay-filter="myTable" lay-even=""></table>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="check">添加角色</a>
+    <a class="layui-btn layui-btn-xs" lay-event="addRole">添加角色</a>
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -92,141 +92,16 @@
                         });
                         layer.close(index);
                     });
-                } else if (obj.event === "check") {
-                    layer.confirm('审核通过？', function (index) {
-                        fly.json('/Admin/Home/RequestArticles', { 'action': 'check', 'data': JSON.stringify(data) }, function (res) {
-                            layer.msg(res.msg);
-                        })
+                } else if (obj.event === "addRole") {
+                    layer.open({
+                        type:2
+                        ,title: '添加权限'
+                        ,area: ['800px', '600px']
+                        ,content: ['@Url.Content($"~/AdminUser/AddRole?adminUserId=")'+data.id]
                     });
                 }
             });
 
         });
-    </script>
-
-    <script>
-
-        /*资讯-查看*/
-        function article_look(title, url, id, w, h) {
-            var index = layer.open({
-                type: 2,
-                title: title,
-                content: url + '/' + id
-            });
-            layer.full(index);
-        }
-
-        /*资讯-编辑*/
-        function article_edit(title, url, id, w, h) {
-            var index = layer.open({
-                type: 2,
-                title: title,
-                content: url + '?action=edit&id=' + id
-            });
-            layer.full(index);
-        }
-
-        /*资讯-删除*/
-        function article_del(obj, id) {
-            layer.confirm('确认要删除吗？', function (index) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Home/RequestArticles',
-                    data: { 'action': 'delete', 'id': id },
-                    dataType: 'json',
-                    success: function (data) {
-                        $(obj).parents("tr").remove();
-                        layer.msg('已删除!', { icon: 1, time: 2000 });
-                    },
-                    error: function (data) {
-                        console.log(data.msg);
-                    },
-                });
-            });
-        }
-
-        /*资讯-批量删除*/
-        function datadel() {
-            var ids = "";
-            var $checked = $("input[type='checkbox']:checked");
-            if ($checked.length <= 0) {
-                layer.msg("至少选择一项!");
-                return;
-            }
-            $checked.each(function () {
-                ids += $(this).val() + ',';
-            });
-            ids.length > 0 && (ids = ids.substring(0, ids.length - 1));
-            console.log(ids);
-            layer.confirm('确认要批量删除吗？', function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Home/RequestArticles',
-                    data: { 'action': 'batchdel', 'id': ids },
-                    dataType: 'json',
-                    success: function () {
-                        layer.msg('批量删除成功!', { icon: 1, time: 2000 });
-                    },
-                    error: function (data) {
-                        console.log(data.msg);
-                    },
-                });
-            });
-        }
-
-        /*资讯-批量静态化*/
-        function datastatic() {
-            $.ajax({
-                type: 'Get',
-                url: '/Admin/Home/RequestArticles',
-                data: { 'action': 'static' },
-                dataType: 'json',
-                success: function (data) {
-                    if (data == "ok") {
-                        layer.msg('批量静态化成功!', { icon: 1, time: 2000 });
-                    }
-                },
-                error: function (data) {
-                    console.log(data.msg);
-                },
-            });
-        }
-
-        /*资讯-批量静态化*/
-        function createindex() {
-            $.ajax({
-                type: 'Get',
-                url: '/Admin/Home/RequestArticles',
-                data: { 'action': 'createindexall' },
-                dataType: 'json',
-                success: function (data) {
-                    if (data == "ok") {
-                        layer.msg('页面全部创建索引成功!', { icon: 1, time: 2000 });
-                    } else {
-                        layer.msg('页面全部创建索引失败!', { icon: 1, time: 2000 });
-                    }
-                },
-                error: function (data) {
-                    console.log(data.msg);
-                },
-            });
-        }
-
-        function addpagedata() {
-            $.ajax({
-                type: 'POST',
-                url: '/Admin/Home/RequestArticles',
-                data: { 'action': 'addpagedata' },
-                dataType: 'json',
-                success: function (data) {
-                    if (data != null && data.length > 0) {
-                        layer.msg('通过规则添加数据成功!', { icon: 1, time: 2000 });
-                    }
-                },
-                error: function (data) {
-                    console.log(data.msg);
-                },
-            });
-        }
     </script>
 }

@@ -61,6 +61,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
         public IActionResult AddPermission(string roleId)
         {
             ViewBag.RoleId = roleId;
+            //所有权限
             var permissions = PermissionService.GetAll();
             var pmsList = from f in permissions
                           select new
@@ -69,6 +70,10 @@ namespace PersonalWebsite.AdminWeb.Controllers
                               title = f.Name
                           };
             ViewBag.Permissions = JsonConvert.SerializeObject(pmsList);
+            //当前角色下的权限
+            var rolesPermissions = PermissionService.GetByRoleId(long.Parse(roleId));
+            var rolePmsList = rolesPermissions.Select(p => p.Id);
+            ViewBag.RolePms = JsonConvert.SerializeObject(rolePmsList);
             return View();
         }
         [HttpPost]
@@ -79,8 +84,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
             //从集合中筛选出value的值
             long[] pmsIds = data.Select(p => p.Value).ToArray();
             PermissionService.AddPermIds(long.Parse(roleId), pmsIds);
-
-            return Json(null);
+            return Json(new Result { Code = 0, Msg = "保存成功" });
         }
 
     }

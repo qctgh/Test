@@ -20,6 +20,8 @@ namespace PersonalWebsite.Service
         public DbSet<AdminUserEntity> AdminUsers { get; set; }
         public DbSet<KeyValueEntity> KeyValues { get; set; }
         public DbSet<PermissionEntity> Permissions { get; set; }
+        public DbSet<RolePermissionsEntity> RolePermissions { get; set; }
+        public DbSet<AdminUserRolesEntity> AdminUserRoles { get; set; }
 
         //public MyDbContext(DbContextOptions<MyDbContext> options)
         //: base(options)

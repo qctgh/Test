@@ -5,6 +5,7 @@ using PersonalWebsite.DTO;
 using PersonalWebsite.Service.Entity;
 using PersonalWebsite.Service;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace ZSZ.Service
 {
@@ -33,16 +34,18 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                var role = ctx.Roles.Include(p => p.Permissions).SingleOrDefault(p => p.Id.Equals(roleId));
+                var role = ctx.Roles.SingleOrDefault(p => p.Id.Equals(roleId));
                 if (role == null)
                 {
                     throw new ArgumentException("roleId不存在" + roleId);
                 }
+                var rolePms = ctx.RolePermissions.Where(p => p.RoleId == roleId);
+                ctx.RemoveRange(rolePms);
 
                 var perms = ctx.Permissions.Where(p => permIds.Contains(p.Id)).ToArray();
                 foreach (var perm in perms)
                 {
-                    role.Permissions.Add(perm);
+                    role.RolesPermissions.Add(new RolePermissionsEntity { RoleId = roleId, PermissionId = perm.Id });
                 }
                 ctx.SaveChanges();
             }
@@ -89,7 +92,9 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                return ctx.Permissions.Select(p => ToDTO(p)).ToArray();
+                var permissions = ctx.RolePermissions.Where(p => p.RoleId == roleId).ToList();
+                var permissionIds = permissions.Select(p => p.PermissionId);
+                return ctx.Permissions.Where(p => permissionIds.Contains(p.Id)).ToList().Select(p => ToDTO(p)).ToArray();
             }
         }
 

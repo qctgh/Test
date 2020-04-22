@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "AddPermission";
+    ViewData["Title"] = "添加角色";
     Layout = "_LayoutPopups";
 }
 @section toolbar{
@@ -19,7 +19,7 @@
                 , layer = layui.layer
                 , util = layui.util;
             //模拟数据
-            var data1 = @Html.Raw(ViewBag.Permissions);
+            var data1 = @Html.Raw(ViewBag.Roles);
 
             //显示搜索框
             transfer.render({
@@ -28,9 +28,9 @@
                 , width: 300
                 , height: 400
                 , data: data1
-                , title: ['所有权限', '已有权限']
+                , title: ['所有角色', '已有角色']
                 , showSearch: true
-                , value : @Html.Raw(ViewBag.RolePms)
+                , value : @Html.Raw(ViewBag.AdminUserRole)
             })
 
             //批量办法定事件
@@ -41,13 +41,13 @@
                     layer.confirm('确认保存?', {icon: 1, title:'提示'},function(index){
                       //do something
                         $.ajax({
-                            url: "@Url.Content("~/Role/AddPermission")",
+                            url: "@Url.Content("~/AdminUser/AddRole")",
                             type: "post",
-                            data: {roleId:'@ViewBag.RoleId',getData:JSON.stringify(getData)},
+                            data: {adminUserId:'@ViewBag.AdminUserId',getData:JSON.stringify(getData)},
                             dataType: "json",
                             success: function (res) {
                                 if (res.code == 0) {
-                                    layer.alert(res.msg);
+                                    layer.msg(res.msg);
                                     window.location.reload();
                                 }
                                 else {

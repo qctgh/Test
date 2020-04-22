@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PersonalWebsite.Service.EntitiesConfig
 {
-    public class keyValueConfig : IEntityTypeConfiguration<KeyValueEntity>
+    public class KeyValueConfig : IEntityTypeConfiguration<KeyValueEntity>
     {
         public void Configure(EntityTypeBuilder<KeyValueEntity> builder)
         {

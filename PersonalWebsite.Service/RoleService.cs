@@ -40,11 +40,16 @@ namespace PersonalWebsite.Service
                 {
                     throw new ArgumentException("用户不存在" + adminUserId);
                 }
-                //var roles = ctx.Roles.Where(r => roleIds.Contains(r.Id)).ToArray();
-                //foreach (var role in roles)
-                //{
-                //    user.Roles.Add(role);
-                //}
+                //删除已有的角色
+                var adminUserRoles = ctx.AdminUserRoles.Where(p => p.AdminUserId == adminUserId);
+                ctx.RemoveRange(adminUserRoles);
+                //重新添加
+                var roles = ctx.Roles.Where(p => roleIds.Contains(p.Id)).ToList();
+                foreach (var item in roles)
+                {
+                    user.AdminUserRoles.Add(new AdminUserRolesEntity { AdminUserId = adminUserId, RoleId = item.Id });
+                }
+
                 ctx.SaveChanges();
             }
         }
@@ -72,12 +77,17 @@ namespace PersonalWebsite.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                //var user = bs.GetById(adminUserId);
-                //if (user == null)
-                //{
-                //    throw new ArgumentException("不存在的管理员" + adminUserId);
-                //}
-                return ctx.Roles.Select(p => ToDTO(p)).ToArray();
+                var user = ctx.AdminUsers.SingleOrDefault(p => p.Id == adminUserId);
+                if (user == null)
+                {
+                    throw new ArgumentException("不存在的管理员" + adminUserId);
+                }
+                //var adminRoles = ctx.AdminUserRoles.Where(p => p.AdminUserId == adminUserId).ToList();
+                //var roleIds = adminRoles.Select(p => p.RoleId);
+                //return ctx.Roles.Where(p => roleIds.Contains(p.Id)).Select(p => ToDTO(p)).ToArray();
+                var adminRoles = ctx.AdminUsers.Include(p => p.AdminUserRoles).SingleOrDefault(p => p.Id == adminUserId).AdminUserRoles.ToList();
+                var roleIds = adminRoles.Select(p => p.RoleId);
+                return ctx.Roles.Where(p => roleIds.Contains(p.Id)).Select(p => ToDTO(p)).ToArray();
             }
         }
 
@@ -141,7 +151,7 @@ namespace PersonalWebsite.Service
                 var roles = ctx.Roles.Where(r => roleIds.Contains(r.Id)).ToArray();
                 foreach (var role in roles)
                 {
-                    user.Roles.Add(role);
+                    //user.Roles.Add(role);
                 }
                 ctx.SaveChanges();
             }

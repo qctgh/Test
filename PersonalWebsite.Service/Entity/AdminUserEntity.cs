@@ -15,8 +15,8 @@ namespace PersonalWebsite.Service.Entity
         public int LoginErrorTimes { get; set; }
         public DateTime? LastLoginErrorDateTime { get; set; }
 
-        public ICollection<RoleEntity> Roles { get; set; }
+        //public ICollection<RoleEntity> Roles { get; set; }
 
-        public ICollection<AdminUserRolesEntity> AdminUserRoles { get; set; }
+        public ICollection<AdminUserRolesEntity> AdminUserRoles { get; set; } = new List<AdminUserRolesEntity>();
     }
 }

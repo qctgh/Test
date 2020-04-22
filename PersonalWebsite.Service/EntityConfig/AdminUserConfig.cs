@@ -19,7 +19,7 @@ namespace PersonalWebsite.Service.EntitiesConfig
             builder.Property(p => p.PhoneNum).HasMaxLength(20).IsRequired().IsUnicode(false);
             builder.Property(p => p.PasswordSalt).HasMaxLength(20).IsRequired().IsUnicode(false);
             builder.Property(p => p.PasswordHash).HasMaxLength(100).IsRequired().IsUnicode(false);
-            builder.Ignore(p => p.Roles);
+            //builder.Ignore(p => p.Roles);
             builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }

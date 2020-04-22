@@ -16,8 +16,8 @@ namespace PersonalWebsite.Service.EntitiesConfig
             //builder.HasMany(r => r.Permissions).WithMany(p => p.Roles).Map(m => m.ToTable("T_RolePermissions")
             //    .MapLeftKey("RoleId").MapRightKey("PermissionId"));
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Ignore(p => p.AdminUsers);
-            builder.Ignore(p => p.Permissions);
+            //builder.Ignore(p => p.AdminUsers);
+            //builder.Ignore(p => p.Permissions);
             builder.HasQueryFilter(p => !p.IsDeleted);
         }
     }

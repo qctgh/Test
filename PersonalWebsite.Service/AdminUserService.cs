@@ -124,8 +124,7 @@ namespace PersonalWebsite.Service
             using (MyDbContext ctx = new MyDbContext())
             {
 
-                var user = ctx.AdminUsers
-                    .AsNoTracking().SingleOrDefault(u => u.Id == adminUserId);
+                var user = ctx.AdminUsers.AsNoTracking().SingleOrDefault(u => u.Id == adminUserId);
                 //var user = bs.GetById(adminUserId);
                 if (user == null)
                 {
@@ -135,8 +134,8 @@ namespace PersonalWebsite.Service
                 //Roles.SelectMany(r => r.Permissions)就是遍历Roles的每一个Role
                 //然后把每个Role的Permissions放到一个集合中
                 //IEnumerable<PermissionEntity>
-                return user.Roles.SelectMany(r => r.Permissions)
-                    .Any(p => p.Name == permissionName);
+                //return user.Roles.SelectMany(r => r.Permissions).Any(p => p.Name == permissionName);
+                return user.AdminUserRoles.SelectMany(p => p.Role.RolesPermissions).Any(p => p.Permission.Name == permissionName);
             }
         }
 

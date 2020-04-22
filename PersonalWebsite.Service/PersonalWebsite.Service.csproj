@@ -7,6 +7,7 @@
   <ItemGroup>
     <None Remove="EntityConfig\KeyValueConfig.cs~RFa1b2c39.TMP" />
     <None Remove="EntityConfig\SettingConfig.cs~RFa2765dc.TMP" />
+    <None Remove="Entity\RoleEntity.cs~RF10c9487.TMP" />
   </ItemGroup>
 
   <ItemGroup>

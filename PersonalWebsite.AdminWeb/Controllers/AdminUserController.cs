@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalWebsite.DTO;
 using PersonalWebsite.IService;
 using PersonalWebsite.AdminWeb.Models;
+using Newtonsoft.Json;
 
 namespace PersonalWebsite.AdminWeb.Controllers
 {
@@ -62,6 +63,34 @@ namespace PersonalWebsite.AdminWeb.Controllers
 
             long userId = AdminUserService.AddAdminUser(model.Name, model.PhoneNum, model.Password, model.Email, null);
             RoleService.AddRoleIds(userId, model.RoleIds);
+            return Json(new Result { Code = 0, Msg = "保存成功" });
+        }
+        [HttpGet]
+        public IActionResult AddRole(string adminUserId)
+        {
+            ViewBag.AdminUserId = adminUserId;
+            //所有角色
+            var roles = RoleService.GetAll();
+            var roleList = from f in roles
+                           select new
+                           {
+                               value = f.Id,
+                               title = f.Name
+                           };
+            ViewBag.Roles = JsonConvert.SerializeObject(roleList);
+            //当前用户下的角色
+            var adminUserRoles = RoleService.GetByAdminUserId(long.Parse(adminUserId));
+            var adminUserRole = adminUserRoles.Select(p => p.Id);
+            ViewBag.AdminUserRole = JsonConvert.SerializeObject(adminUserRole);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddRole(string adminUserId, string getData)
+        {
+            var data = JsonConvert.DeserializeObject<List<JsonModel>>(getData);
+            //从集合中筛选出value的值
+            long[] roleIds = data.Select(p => p.Value).ToArray();
+            RoleService.AddRoleIds(long.Parse(adminUserId), roleIds);
             return Json(new Result { Code = 0, Msg = "保存成功" });
         }
 
