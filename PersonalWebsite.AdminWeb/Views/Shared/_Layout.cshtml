@@ -84,18 +84,17 @@
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item"><a href="~/">首页</a></li>
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;">社区管理</a>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">网站管理</a>
                         <dl class="layui-nav-child">
-                            @*<dd><a href="/Admin/Home/PostArticle?action=addnew">发表文章</a></dd>*@
-                            <dd>@Html.ActionLink("文章管理", "ArticleMgr")</dd>
+                            <dd class="@(ViewBag.Title == "文章管理"?"layui-this":"")"><a href="@Url.Content("~/Article/List")">文章管理</a></dd>
                             <dd>@Html.ActionLink("评论管理", "ModComments")</dd>
                             <dd>@Html.ActionLink("过滤词管理", "FilterWordsMgr")</dd>
                             <dd>@Html.ActionLink("频道管理", "ChannelMgr")</dd>
                             <dd>@Html.ActionLink("广告管理", "AdMgr")</dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item ">
                         <a href="javascript:;">系统管理</a>
                         <dl class="layui-nav-child">
                             <dd class="@(ViewBag.Title == "配置管理"?"layui-this":"")"><a href="@Url.Content("~/Setting/List")">配置管理</a></dd>

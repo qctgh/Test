@@ -6,19 +6,10 @@ namespace PersonalWebsite.Service.Entity
 {
     public class ArticleEntity : BaseEntity
     {
-
         /// <summary>
         /// 标题
         /// </summary>
         public String Title { get; set; }
-        /// <summary>
-        /// 发布时间
-        /// </summary>
-        public DateTime PostDate { get; set; }
-        /// <summary>
-        /// 介绍
-        /// </summary>
-        public string Introduce { get; set; }
         /// <summary>
         /// 内容
         /// </summary>

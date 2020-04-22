@@ -1,7 +1,10 @@
-﻿using PersonalWebsite.IService;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalWebsite.DTO;
+using PersonalWebsite.IService;
 using PersonalWebsite.Service.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PersonalWebsite.Service
@@ -21,6 +24,32 @@ namespace PersonalWebsite.Service
             //    return ctx.SaveChanges() > 0;
             //}
             return true;
+        }
+
+        public ArticleDTO[] GetAll()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.Articles.Include(p => p.Channel).Include(p => p.User).AsNoTracking().Select(p => ToDTO(p)).ToArray();
+            }
+        }
+
+        private ArticleDTO ToDTO(ArticleEntity article)
+        {
+            ArticleDTO dto = new ArticleDTO();
+            dto.Id = article.Id;
+            dto.ChannelId = article.ChannelId;
+            dto.ChannelName = article?.Channel.Name;
+            dto.Content = article.Content;
+            dto.IsFirst = article.IsFirst;
+            dto.IsVisible = article.IsVisible;
+            dto.StaticPath = article.StaticPath;
+            dto.SupportCount = article.SupportCount;
+            dto.CreateDateTime = article.CreateDateTime;
+            dto.Title = article.Title;
+            dto.UserId = article.UserId;
+            dto.UserName = article.User.PhoneNum;
+            return dto;
         }
     }
 }
