@@ -1,7 +1,87 @@
-﻿
+﻿@model ArticleModel
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "添加文章";
+    ViewData["BreadCrumb"] = "主页 / 文章管理 / 添加文章";
 }
+@section toolbar{
+    <h3>添加文章</h3>
+}
+<form id="form1" class="layui-form" asp-action="Add" asp-controller="Article" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支持次数</label>
+        <div class="layui-input-block">
+            <input type="text" name="password" placeholder="请输入次数" autocomplete="off" class="layui-input">
+        </div>
+    </div>
 
-<h2>Add</h2>
+    <div class="layui-form-item">
+        <label class="layui-form-label">频道</label>
+        <div class="layui-input-block">
+            <select name="interest" lay-verify="required">
+                <option value=""></option>
+                <option value="0">写作</option>
+                <option value="1">阅读</option>
+                <option value="2">游戏</option>
+                <option value="3">音乐</option>
+                <option value="4">旅行</option>
+            </select>
+        </div>
+    </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否置顶</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">文本域</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="submit" type="button" class="layui-btn" lay-submit="">保存</button>
+        </div>
+    </div>
+</form>
+@section scripts{
+    <script>
+        layui.use(['layer','jquery'], function () {
+            var layer = layui.layer
+                , jquery = layui.jquery;
+            var $ = layui.$;
+
+            $("#submit").click(function () {
+                var formData = $("#form1").serializeArray();
+                $.ajax({
+                    url: "@Url.Content("~/Article/Add")",
+                    type: "post",
+                    data: formData,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+                            window.location.reload();
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    },
+                    error: function () { layer.alert("请求出错"); }
+                });
+            });
+
+        });
+
+    </script>
+}
