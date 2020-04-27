@@ -8,31 +8,31 @@
 }
 <form id="form1" class="layui-form" asp-action="Add" asp-controller="Article" method="post">
     <div class="layui-form-item">
-        <label class="layui-form-label">频道</label>
-        <div class="layui-input-block">
-            <select name="ChannelId" lay-verify="required">
-                <option value=""></option>
-                <option value="0">开发</option>
-                <option value="1">测试</option>
-                <option value="2">专业</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-            <input type="text" name="Title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">支持次数</label>
         <div class="layui-input-block">
-            <input type="text" name="SupportCount" placeholder="请输入次数" autocomplete="off" class="layui-input">
+            <input type="text" name="password" placeholder="请输入次数" autocomplete="off" class="layui-input">
         </div>
     </div>
 
-
+    <div class="layui-form-item">
+        <label class="layui-form-label">频道</label>
+        <div class="layui-input-block">
+            <select name="interest" lay-verify="required">
+                <option value=""></option>
+                <option value="0">写作</option>
+                <option value="1">阅读</option>
+                <option value="2">游戏</option>
+                <option value="3">音乐</option>
+                <option value="4">旅行</option>
+            </select>
+        </div>
+    </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">是否置顶</label>
@@ -42,12 +42,9 @@
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">内容</label>
+        <label class="layui-form-label">文本域</label>
         <div class="layui-input-block">
-            @*<textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>*@
-            <!-- 加载编辑器的容器 -->
-            <script id="container" name="Content" type="text/plain" style="height:300px;">
-            </script>
+            <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
         </div>
     </div>
 
@@ -58,15 +55,6 @@
     </div>
 </form>
 @section scripts{
-    <!-- 配置文件 -->
-    <script type="text/javascript" src="~/lib/ueditor/ueditor.config.js"></script>
-    <!-- 编辑器源码文件 -->
-    <script type="text/javascript" src="~/lib/ueditor/ueditor.all.js"></script>
-    <!-- 实例化编辑器 -->
-    <script type="text/javascript">
-        var ue = UE.getEditor('container');
-    </script>
-
     <script>
         layui.use(['layer','jquery'], function () {
             var layer = layui.layer
@@ -74,9 +62,6 @@
             var $ = layui.$;
 
             $("#submit").click(function () {
-                var content = ue.getContent();
-
-                $("#container").val(content);
                 var formData = $("#form1").serializeArray();
                 $.ajax({
                     url: "@Url.Content("~/Article/Add")",

@@ -19,6 +19,7 @@ namespace PersonalWebsite.Web.Controllers
 
         public IActionResult Index()
         {
+            ArticleService.AddArticle("测试标题", "", 0, "内容", 0);
             return View();
         }
     }

@@ -12,7 +12,7 @@ namespace PersonalWebsite.IService
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        bool AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId);
+        bool AddArticle(string title, string introduce, int channelId, string content, int userId);
 
         ArticleDTO[] GetAll();
 

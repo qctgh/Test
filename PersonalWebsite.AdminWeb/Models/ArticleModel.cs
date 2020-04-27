@@ -7,11 +7,6 @@ namespace PersonalWebsite.AdminWeb.Models
 {
     public class ArticleModel
     {
-        public string Title { get; set; }
-        public long ChannelId { get; set; }
-        public string Content { get; set; }
-        public int SupportCount { get; set; }
-        public bool IsFirst { get; set; }
-        public long UserId { get; set; }
+
     }
 }
