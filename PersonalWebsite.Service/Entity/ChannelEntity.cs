@@ -10,7 +10,7 @@ namespace PersonalWebsite.Service.Entity
         /// 父节点ID
         /// </summary>
         public long ParentId { get; set; }
-        public ICollection<ChannelEntity> Channels { get; set; }
+        //public ICollection<ChannelEntity> Channels { get; set; }
         /// <summary>
         /// 名称
         /// </summary>
