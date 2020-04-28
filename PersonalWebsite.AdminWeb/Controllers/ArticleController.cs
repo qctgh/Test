@@ -45,6 +45,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Add(ArticleModel model)
         {
+            ArticleService.AddArticle(model.Title, model.ChannelId, model.Content, model.SupportCount, model.IsFirst, model.UserId);
             return View();
         }
     }

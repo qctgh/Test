@@ -11,19 +11,21 @@ namespace PersonalWebsite.Service
 {
     public class ArticleService : IArticleService
     {
-        public bool AddArticle(string title, string introduce, int channelId, string content, int userId)
+        public bool AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId)
         {
-            //using (MyDbContext ctx = new MyDbContext())
-            //{
-            //    //CommonService<ArticleEntity> cs = new CommonService<ArticleEntity>(ctx);
-            //    ArticleEntity article = new ArticleEntity();
-            //    article.Title = title;
-            //    article.Introduce = introduce;
-            //    article.Content = content;
-            //    ctx.ArticleEntities.Add(article);
-            //    return ctx.SaveChanges() > 0;
-            //}
-            return true;
+
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                ArticleEntity article = new ArticleEntity();
+                article.Title = title;
+                article.ChannelId = channelId;
+                article.Content = content;
+                article.SupportCount = supportCount;
+                article.IsFirst = isFirst;
+                article.UserId = userId;
+                ctx.Articles.Add(article);
+                return ctx.SaveChanges() > 0;
+            }
         }
 
         public ArticleDTO[] GetAll()
