@@ -1,17 +1,18 @@
 ﻿@model ArticleModel
 @{
-    ViewData["Title"] = "添加文章";
-    ViewData["BreadCrumb"] = "主页 / 文章管理 / 添加文章";
+    ViewData["Title"] = "编辑文章";
+    ViewData["BreadCrumb"] = "主页 / 文章管理 / 编辑文章";
 }
 @section toolbar{
-    <h3>添加文章</h3>
+    <h3>编辑文章</h3>
 }
 <link href="~/res/css/global.css" rel="stylesheet" />
 <form id="form1" class="layui-form" asp-action="Add" asp-controller="Article" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="layui-form-item">
         <label class="layui-form-label">频道</label>
         <div class="layui-input-block">
-            <select name="ChannelId" lay-verify="required">
+            <select asp-for="ChannelId" lay-verify="required">
                 <option value=""></option>
                 <option value="0">开发</option>
                 <option value="1">测试</option>
@@ -23,13 +24,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-            <input type="text" name="Title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <input type="text" asp-for="Title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">支持次数</label>
         <div class="layui-input-block">
-            <input type="text" name="SupportCount" lay-verify="required" placeholder="请输入次数" autocomplete="off" class="layui-input">
+            <input type="text" asp-for="SupportCount" placeholder="请输入次数" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -38,14 +39,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">是否置顶</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+            <input type="checkbox" asp-for="IsFirst" lay-skin="switch" lay-text="ON|OFF">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">内容</label>
         <div class="layui-input-block">
-            <textarea name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style=" height: 260px;"></textarea>
+            <textarea asp-for="Content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style=" height: 260px;"></textarea>
         </div>
     </div>
 
@@ -71,14 +72,13 @@
             $("#submit").click(function () {
                 var formData = $("#form1").serializeArray();
                 $.ajax({
-                    url: "@Url.Content("~/Article/Add")",
+                    url: "@Url.Content("~/Article/Edit")",
                     type: "post",
                     data: formData,
                     dataType: "json",
                     success: function (res) {
                         if (res.code == 0) {
                             layer.alert(res.msg);
-                            window.location.reload();
                         }
                         else {
                             layer.alert(res.msg);

@@ -28,11 +28,44 @@ namespace PersonalWebsite.Service
             }
         }
 
+
+
         public ArticleDTO[] GetAll()
         {
             using (MyDbContext ctx = new MyDbContext())
             {
                 return ctx.Articles.Include(p => p.Channel).Include(p => p.User).AsNoTracking().Select(p => ToDTO(p)).ToArray();
+            }
+        }
+
+        public ArticleDTO GetById(long id)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ToDTO(ctx.Articles.Include(p => p.Channel).Include(p => p.User).SingleOrDefault(p => p.Id == id));
+            }
+        }
+
+        public bool Edit(long id, string title, long channelId, string content, int supportCount, bool isFirst, long userId)
+        {
+            try
+            {
+                using (MyDbContext ctx = new MyDbContext())
+                {
+                    var article = ctx.Articles.Single(p => p.Id == id);
+                    article.Title = title;
+                    article.ChannelId = channelId;
+                    article.Content = content;
+                    article.SupportCount = supportCount;
+                    article.IsFirst = isFirst;
+                    article.UserId = userId;
+                    ctx.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 

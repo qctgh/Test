@@ -16,5 +16,9 @@ namespace PersonalWebsite.IService
 
         ArticleDTO[] GetAll();
 
+        ArticleDTO GetById(long id);
+
+        bool Edit(long id, string title, long channelId, string content, int supportCount, bool isFirst, long userId);
+
     }
 }
