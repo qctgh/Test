@@ -20,10 +20,7 @@ namespace PersonalWebsite.Web.Controllers
 
         public IActionResult Index()
         {
-            var articles = ArticleService.GetAll(3, 0);
-            HomeIndexModel model = new HomeIndexModel();
-            model.Articles = articles;
-            return View(model);
+            return View();
         }
 
         public IActionResult About()

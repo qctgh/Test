@@ -24,6 +24,7 @@ namespace PersonalWebsite.Web.Controllers
         public IActionResult List(int page)
         {
             var articles = ArticleService.GetAll(3, (page - 1) * 3);
+            //天花板，3.0取3,3.1取4
             var count = Math.Ceiling(ArticleService.GetAll().Length / 3.0);
             Result result = new Result
             {
@@ -35,9 +36,12 @@ namespace PersonalWebsite.Web.Controllers
         }
 
 
-        public IActionResult Detail()
+        public IActionResult Detail(long id)
         {
-            return View();
+            var article = ArticleService.GetById(id);
+            ArticleDetailModel model = new ArticleDetailModel();
+            model.Article = article;
+            return View(model);
         }
     }
 }

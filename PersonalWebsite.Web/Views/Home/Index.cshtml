@@ -1,29 +1,8 @@
-﻿@model HomeIndexModel
-
+﻿
 <h4 class="item-title">
     <p><i class="layui-icon layui-icon-speaker"></i>公告：<span>欢迎来到我的个人博客</span></p>
 </h4>
-<div id="demo">
-    @*@foreach (var item in Model.Articles)
-        {
-            <div class="item">
-                <div class="item-box  layer-photos-demo1 layer-photos-demo">
-                    <h3>
-                        <a href="~/Article/Detail">@item.Title</a>
-                    </h3>
-                    <h5>发布于：<span>@item.CreateDateTime</span></h5>
-                    <p>@item.Content</p>
-                    <img src="../res/static/images/item.png" alt="">
-                </div>
-                <div class="comment count">
-                    <a href="details.html#comment">评论</a>
-                    <a href="javascript:;" class="like">点赞</a>
-                </div>
-            </div>
-        }*@
-
-
-</div>
+<div id="demo"></div>
 @section scripts{
     <script>
         layui.use('flow', function () {
@@ -37,12 +16,12 @@
                     $.get('@Url.Content("~/Article/List?page=")' + page, function (res) {
                         //假设你的列表返回在data集合中
                         layui.each(res.data, function (index, item) {
-                            var html = '<div class="item"><div class="item-box  layer-photos-demo1 layer-photos-demo"><h3><a href="~/Article/Detail">'+item.title+'</a></h3><h5>发布于：<span>'+item.createDateTime+'</span></h5><p>'+item.content+'</p><img src="../res/static/images/item.png"alt=""></div><div class="comment count"><a href="details.html#comment">评论</a><a href="javascript:;"class="like">点赞</a></div></div>';
+                            var html = '<div class="item"><div class="item-box  layer-photos-demo1 layer-photos-demo"><h3><a href="/Article/Detail/'+item.id+'">'+item.title+'</a></h3><h5>发布于：<span>'+item.createDateTime+'</span></h5><p>'+item.content+'</p><img src="../res/static/images/item.png"alt=""></div><div class="comment count"><a href="details.html#comment">评论</a><a href="javascript:;"class="like">点赞</a></div></div>';
                             lis.push(html);
                         });
 
                         //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
                         next(lis.join(''), page < res.count);
                     });
                 }
