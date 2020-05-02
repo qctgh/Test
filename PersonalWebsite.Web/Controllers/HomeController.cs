@@ -4,35 +4,39 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
+using PersonalWebsite.IService;
 using PersonalWebsite.Web.Models;
 
 namespace PersonalWebsite.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IMemoryCache _cache;
-        private readonly ILogger<HomeController> _logger;
+        IArticleService ArticleService { get; set; }
 
-        public HomeController(IMemoryCache cache, ILogger<HomeController> logger)
+        public HomeController(IArticleService ArticleService)
         {
-            _cache = cache;
-            _logger = logger;
+            this.ArticleService = ArticleService;
         }
 
         public IActionResult Index()
         {
-            _logger.LogInformation("我进入了INdex页面");
-            try
-            {
-                string str = "我是小可爱";
-                int.Parse(str);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
+            var articles = ArticleService.GetAll();
+            HomeIndexModel model = new HomeIndexModel();
+            model.Articles = articles;
+            return View(model);
+        }
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
             return View();
         }
 

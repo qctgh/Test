@@ -91,6 +91,24 @@ namespace PersonalWebsite.AdminWeb.Controllers
             }
             return Json(result);
         }
+
+
+        //审核文章
+        public IActionResult Check(long id)
+        {
+            bool isSuccess = ArticleService.CheckById(id);
+            return Json(new Result { Code = isSuccess ? 0 : 1, Msg = "审核通过" });
+        }
+
+        //删除文章
+        public IActionResult Del(long id)
+        {
+            ArticleService.DeleteById(id);
+            return Json(new Result { Code = 0, Msg = "删除成功" });
+        }
+
+
+
         //上传图片
         [HttpPost]
         public IActionResult Upload()
@@ -125,6 +143,12 @@ namespace PersonalWebsite.AdminWeb.Controllers
             return Json(new UploadResult { Status = isUploadStatus ? 0 : 1, Msg = "上传成功", Url = path }); ;
         }
 
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        /// <param name="stream">图片的文件流</param>
+        /// <param name="saveKey">保存图片的名称</param>
+        /// <returns></returns>
         public bool UploadImg(Stream stream, string saveKey)
         {
             string bucket = "qiect";

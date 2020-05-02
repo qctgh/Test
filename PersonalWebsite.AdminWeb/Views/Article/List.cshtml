@@ -33,9 +33,14 @@
 @section scripts{
 
     <script>
-        layui.use(['table','layer'], function () {
+        layui.config({
+            version: "3.0.0"
+            , base: '/res/mods/'
+        }).extend({
+            fly: 'index'
+        }).use(['fly','table'], function () {
             var table = layui.table
-                , layer = layui.layer;
+                , fly = layui.fly;
             //第一个实例
             table.render({
                 elem: '#myTable'
@@ -74,10 +79,37 @@
                 var data = obj.data;
                 //console.log(obj)
                 switch (obj.event) {
+                    //审核
+                    case 'check':
+                        {
+                            layer.confirm('确定审核通过？', function (index) {
+                                fly.json('@Url.Content("~/Article/Check")', { 'id': data.id }, function (res) {
+                                    layer.msg(res.msg);
+                                });
+                                //window.location.reload();
+                                window.location = window.location;
+                            });
+                        } break;
+                    case 'static':
+                        layer.msg("静态化成功");
+                        break;
+                    //编辑
                     case 'edit':
                         {
                             location.href = '@Url.Content("~/Article/Edit/")'+data.id;
                         } break;
+                    //删除
+                    case 'del':
+                        {
+                            layer.confirm('真的删除行么', function (index) {
+                                fly.json('@Url.Content("~/Article/Del")', { 'id': data.id }, function (res) {
+                                    layer.msg(res.msg);
+                                    });
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } break;
+
                 }
 
                 @*if (obj.event === 'del') {

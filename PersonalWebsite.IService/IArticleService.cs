@@ -13,12 +13,39 @@ namespace PersonalWebsite.IService
         /// <param name=""></param>
         /// <returns></returns>
         bool AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId);
-
+        /// <summary>
+        /// 获取全部记录
+        /// </summary>
+        /// <returns></returns>
         ArticleDTO[] GetAll();
-
+        /// <summary>
+        /// 获取文章根据ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         ArticleDTO GetById(long id);
-
+        /// <summary>
+        /// 编辑文章
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="title"></param>
+        /// <param name="channelId"></param>
+        /// <param name="content"></param>
+        /// <param name="supportCount"></param>
+        /// <param name="isFirst"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         bool Edit(long id, string title, long channelId, string content, int supportCount, bool isFirst, long userId);
-
+        /// <summary>
+        /// 删除文章根据ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        void DeleteById(long id);
+        /// <summary>
+        /// 审核文章
+        /// </summary>
+        /// <param name="id"></param>
+        bool CheckById(long id);
     }
 }

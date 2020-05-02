@@ -86,5 +86,24 @@ namespace PersonalWebsite.Service
             dto.UserName = article.User.PhoneNum;
             return dto;
         }
+
+        public void DeleteById(long id)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                var article = ctx.Articles.SingleOrDefault(p => p.Id == id);
+                ctx.Remove(article);
+                ctx.SaveChanges();
+            }
+        }
+        public bool CheckById(long id)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                var article = ctx.Articles.SingleOrDefault(p => p.Id == id);
+                article.IsVisible = true;
+                return ctx.SaveChanges() > 0;
+            }
+        }
     }
 }
