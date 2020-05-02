@@ -37,6 +37,14 @@ namespace PersonalWebsite.Service
                 return ctx.Articles.Include(p => p.Channel).Include(p => p.User).AsNoTracking().Select(p => ToDTO(p)).ToArray();
             }
         }
+        public ArticleDTO[] GetAll(int pageSize, int currentIndex)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                var articles = ctx.Articles.Include(p => p.Channel).Include(p => p.User).AsNoTracking().OrderByDescending(p => p.CreateDateTime).Skip(currentIndex).Take(pageSize);
+                return articles.Select(p => ToDTO(p)).ToArray();
+            }
+        }
 
         public ArticleDTO GetById(long id)
         {
@@ -105,5 +113,7 @@ namespace PersonalWebsite.Service
                 return ctx.SaveChanges() > 0;
             }
         }
+
+
     }
 }

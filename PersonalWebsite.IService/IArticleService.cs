@@ -19,6 +19,14 @@ namespace PersonalWebsite.IService
         /// <returns></returns>
         ArticleDTO[] GetAll();
         /// <summary>
+        /// 获取全部记录分页
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="currentIndex"></param>
+        /// <returns></returns>
+        ArticleDTO[] GetAll(int pageSize, int currentIndex);
+
+        /// <summary>
         /// 获取文章根据ID
         /// </summary>
         /// <param name="id"></param>
