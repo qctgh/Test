@@ -37,13 +37,13 @@ namespace PersonalWebsite.AdminWeb.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult List(ArticleModel model)
+        public IActionResult List(ArticleModel model, int page, int limit)
         {
-            var articles = ArticleService.GetAll();
+            var articles = ArticleService.GetAll(limit, (page - 1) * limit);
             Result result = new Result();
             result.Code = 0;
             result.Data = articles;
-            result.Count = articles.Length;
+            result.Count = ArticleService.GetAll().Length;
             return Json(result);
         }
         [HttpGet]

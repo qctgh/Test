@@ -1,6 +1,6 @@
 ﻿@model ArticleDetailModel
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = Model.Article.Title;
 }
 
 <div class="container container-message container-details">
@@ -9,7 +9,7 @@
             <div class="item-box  layer-photos-demo1 layer-photos-demo">
                 <h3>@Model.Article.Title</h3>
                 <h5>发布于：<span>@Model.Article.CreateDateTime</span></h5>
-                <p>
+                <p class="detail-body">
                     @Model.Article.Content
                 </p>
                 <img src="~/res/static/images/item.png" alt="" layer-index="0">
@@ -26,7 +26,7 @@
         </div>
         <div id="LAY-msg-box">
             <div class="info-item">
-                <img class="info-img" src="../res/static/images/info-img.png" alt="">
+                <img class="info-img" src="/res/static/images/info-img.png" alt="">
                 <div class="info-text">
                     <p class="title count">
                         <span class="name">一片空白</span>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="info-item">
-                <img class="info-img" src="../res/static/images/info-img.png" alt="">
+                <img class="info-img" src="/res/static/images/info-img.png" alt="">
                 <div class="info-text">
                     <p class="title count">
                         <span class="name">一片空白</span>
