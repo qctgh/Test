@@ -88,10 +88,8 @@
                         <a class="" href="javascript:;">网站管理</a>
                         <dl class="layui-nav-child">
                             <dd class="@(ViewBag.Title == "文章管理"?"layui-this":"")"><a href="@Url.Content("~/Article/List")">文章管理</a></dd>
-                            <dd>@Html.ActionLink("评论管理", "ModComments")</dd>
-                            <dd>@Html.ActionLink("过滤词管理", "FilterWordsMgr")</dd>
-                            <dd>@Html.ActionLink("频道管理", "ChannelMgr")</dd>
-                            <dd>@Html.ActionLink("广告管理", "AdMgr")</dd>
+                            <dd class="@(ViewBag.Title == "评论管理"?"layui-this":"")"><a href="@Url.Content("~/Comment/List")">评论管理</a></dd>
+                            <dd class="@(ViewBag.Title == "过滤词管理"?"layui-this":"")"><a href="@Url.Content("~/FilterWord/List")">过滤词管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item ">
