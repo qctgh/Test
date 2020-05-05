@@ -11,9 +11,11 @@ namespace PersonalWebsite.Web.Controllers
     public class ArticleController : Controller
     {
         IArticleService ArticleService { get; set; }
-        public ArticleController(IArticleService ArticleService)
+        ICommentService CommentService { get; set; }
+        public ArticleController(IArticleService ArticleService, ICommentService CommentService)
         {
             this.ArticleService = ArticleService;
+            this.CommentService = CommentService;
         }
 
         public IActionResult Index()
@@ -41,7 +43,26 @@ namespace PersonalWebsite.Web.Controllers
             var article = ArticleService.GetById(id);
             ArticleDetailModel model = new ArticleDetailModel();
             model.Article = article;
+            var comments = CommentService.GetByArticleId(id);
+            model.Comments = comments;
             return View(model);
+        }
+        //写评论
+        [HttpGet]
+        public IActionResult Comment(long id)
+        {
+            var article = ArticleService.GetById(id);
+            ArticleDetailModel model = new ArticleDetailModel();
+            model.Article = article;
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Comment(long id, string content)
+        {
+            //获取评论者IP
+            string ip = HttpContext.Connection.RemoteIpAddress.ToString();
+            CommentService.Add(id, content, ip);
+            return RedirectToAction("Detail", new { Id = id });
         }
     }
 }

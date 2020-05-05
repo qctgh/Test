@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -45,6 +46,7 @@ namespace PersonalWebsite.Service.Entity
         /// 频道
         /// </summary>
         public ChannelEntity Channel { get; set; }
+
 
     }
 }

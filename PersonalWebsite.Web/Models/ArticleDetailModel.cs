@@ -8,7 +8,14 @@ namespace PersonalWebsite.Web.Models
 {
     public class ArticleDetailModel
     {
+        /// <summary>
+        /// 文章实体
+        /// </summary>
         public ArticleDTO Article { get; set; }
+        /// <summary>
+        /// 评论集合
+        /// </summary>
+        public CommentDTO[] Comments { get; set; }
 
     }
 }

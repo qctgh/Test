@@ -1,13 +1,21 @@
 ﻿@{
     ViewBag.Title = "Todo369";
 }
+<style>
+    a cite {
+        color: white !important;
+        background-color: #1E9FFF !important;
+    }
+</style>
 <h4 class="item-title">
     <p><i class="layui-icon layui-icon-speaker"></i>公告：<span>欢迎来到我的个人博客</span></p>
 </h4>
 <div id="demo"></div>
 @section scripts{
     <script>
-        layui.use('flow', function () {
+        layui.config({
+		  base: '/res/static/js/'
+		}).use(['blog','flow'], function () {
             var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
             var flow = layui.flow;
             flow.load({
@@ -18,7 +26,7 @@
                     $.get('@Url.Content("~/Article/List?page=")' + page, function (res) {
                         //假设你的列表返回在data集合中
                         layui.each(res.data, function (index, item) {
-                            var html = '<div class="item"><div class="item-box  layer-photos-demo1 layer-photos-demo"><h3><a href="/Article/Detail/'+item.id+'">'+item.title+'</a></h3><h5>发布于：<span>'+item.createDateTime+'</span></h5><p>'+item.content+'</p><img src="../res/static/images/item.png"alt=""></div><div class="comment count"><a href="details.html#comment">评论</a><a href="javascript:;"class="like">点赞</a></div></div>';
+                            var html = '<div class="item"><div class="item-box  layer-photos-demo1 layer-photos-demo"><h3><a href="/Article/Detail/'+item.id+'">'+item.title+'</a></h3><h5>发布于：<span>'+item.createDateTime+'</span></h5><p>'+item.content+'</p><img src="../res/static/images/item.png"alt=""></div><div class="comment count"><a href="/Article/Detail/'+item.id+'#comment">评论</a><a href="javascript:;"class="like">点赞</a></div></div>';
                             lis.push(html);
                         });
 

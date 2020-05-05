@@ -119,7 +119,7 @@ layui.define(['element', 'form', 'laypage', 'jquery', 'laytpl'], function (expor
 
     //end 提交
     $('#item-btn').on('click', function () {
-        var elemCont = $('#LAY-msg-content')
+        var elemCont = $('#content')
             , content = elemCont.val();
         if (content.replace(/\s/g, '') == "") {
             layer.msg('请先输入留言');

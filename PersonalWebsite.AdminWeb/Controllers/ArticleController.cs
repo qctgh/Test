@@ -69,7 +69,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
                 IsFirst = article.IsFirst,
                 ChannelId = article.ChannelId,
                 Content = article.Content,
-                UserId = article.UserId
+                UserId = article.UserId,
             };
             return View(model);
         }
