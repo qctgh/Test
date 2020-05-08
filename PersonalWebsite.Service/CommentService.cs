@@ -25,6 +25,30 @@ namespace ZSZ.Service
             }
         }
 
+        public string AddComment(long articleId, string content, string ip)
+        {
+            string result = "";
+            if (content.Contains("<") || content.Contains(">"))
+            {
+                result = "服务器返回错误";
+            }
+
+
+
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                CommentEntity comment = new CommentEntity();
+                comment.ArticleId = articleId;
+                comment.Content = content;
+                comment.IP = ip;
+                ctx.Comments.Add(comment);
+                ctx.SaveChanges();
+            }
+
+            return result;
+        }
+
+
         public CommentDTO[] GetByArticleId(long articleId)
         {
             using (MyDbContext ctx = new MyDbContext())
@@ -47,4 +71,6 @@ namespace ZSZ.Service
             return dto;
         }
     }
+
+
 }

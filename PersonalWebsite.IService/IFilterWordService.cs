@@ -14,6 +14,21 @@ namespace PersonalWebsite.IService
 
         FilterWordDTO[] GetAll();
         FilterWordDTO[] GetAll(int page, int limit);
+        /// <summary>
+        /// 获取BANNED列表
+        /// </summary>
+        /// <returns></returns>
+        FilterWordDTO[] GetBanned();
+        /// <summary>
+        /// 获取MOD列表
+        /// </summary>
+        /// <returns></returns>
+        FilterWordDTO[] GetMod();
+        /// <summary>
+        /// 获取替换词列表
+        /// </summary>
+        /// <returns></returns>
+        FilterWordDTO[] GetReplace();
     }
 
 }

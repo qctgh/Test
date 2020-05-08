@@ -11,6 +11,11 @@ namespace ZSZ.Service
 {
     public class FilterWordService : IFilterWordService
     {
+        //重用
+        private static string bannedExprKey = typeof(FilterWordService) + "BannedExpr";
+        private static string modExprKey = typeof(FilterWordService) + "ModExpr";
+
+
         public long Add(string wordPattern, string replaceWord)
         {
             using (MyDbContext ctx = new MyDbContext())
@@ -58,5 +63,36 @@ namespace ZSZ.Service
             dto.DeletedDateTime = entity.DeletedDateTime;
             return dto;
         }
+
+        public FilterWordDTO[] GetBanned()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.FilterWords.Where(p => p.ReplaceWord == "{BANNED}").Select(p => ToDTO(p)).ToArray();
+            }
+        }
+        public FilterWordDTO[] GetMod()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.FilterWords.Where(p => p.ReplaceWord == "{MOD}").Select(p => ToDTO(p)).ToArray();
+            }
+        }
+        public FilterWordDTO[] GetReplace()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.FilterWords.Where(p => p.ReplaceWord != "{MOD}" && p.ReplaceWord != "{BANNED}").Select(p => ToDTO(p)).ToArray();
+            }
+        }
+
+
+
+
+    }
+
+    public enum FilterResult
+    {
+        OK, Mod, Banned
     }
 }
