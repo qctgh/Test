@@ -69,24 +69,38 @@ namespace PersonalWebsite.Web.Controllers
         [HttpPost]
         public IActionResult Comment(long id, string content)
         {
+            Result result = new Result();
+            if (string.IsNullOrEmpty(content))
+            {
+                result.Code = 1;
+                result.Msg = "请输入内容";
+                return Json(result);
+            }
             //获取评论者IP
             string ip = HttpContext.Connection.RemoteIpAddress.ToString();
             string replaceMsg;
+            //对用户输入的评论进行过滤处理
             FilterResult filterResult = FilterMsg(content, out replaceMsg);
             if (filterResult == FilterResult.OK)
             {
-                CommentService.Add(id, content, ip);
+                content = replaceMsg;
+                CommentService.Add(id, content, ip, true);
             }
             else if (filterResult == FilterResult.Mod)
             {
-                return Content("请耐心等待审核！");
+                //含有审核词则向数据库中插入，但是IsVisible=false，需要审核设置为true才能显示
+                CommentService.Add(id, content, ip, false);
+                result.Code = 1;
+                result.Msg = "请耐心等待审核";
+                return Json(result);
             }
             else if (filterResult == FilterResult.Banned)
             {
-                return Content("您的评论内容含有禁用词汇，请注意文明用语！");
+                //如果含有禁用词，则不向数据库中插入
+                result.Code = 1;
+                result.Msg = "您的评论内容含有禁用词汇，请注意文明用语";
+                return Json(result);
             }
-
-
             return RedirectToAction("Detail", new { Id = id });
         }
 
@@ -102,7 +116,7 @@ namespace PersonalWebsite.Web.Controllers
             //我的习惯就是在Cache的名字前加一个类名，几乎不会重复
             //项目组规定，缓存的名字都是类型全名+缓存项的名字
             string bannedExpr = GetCookies(bannedExprKey);
-            if (bannedExpr != null)//如果缓存中存在，则直接返回
+            if (!string.IsNullOrEmpty(bannedExpr))//如果缓存中存在，则直接返回
             {
                 return bannedExpr;
             }
@@ -121,7 +135,7 @@ namespace PersonalWebsite.Web.Controllers
         private string GetModExpr()
         {
             string modExpr = GetCookies(modExprKey);
-            if (modExpr != null)//如果缓存中存在，则直接返回
+            if (!string.IsNullOrEmpty(modExpr))//如果缓存中存在，则直接返回
             {
                 return modExpr;
             }

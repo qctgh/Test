@@ -19,31 +19,44 @@
                 </div>
             </div>
         </div>
-        <form class="layui-form" asp-action="Comment" asp-controller="Article" method="post">
-            <input type="hidden" asp-for="Article.Id" />
+        <form id="form1" class="layui-form" asp-action="Comment" asp-controller="Article" method="post">
+            <input type="hidden" name="Id" asp-for="Article.Id" />
             <div class="layui-form-item layui-form-text">
                 <textarea name="content" class="layui-textarea" style="resize:none" placeholder="写点什么啊"></textarea>
             </div>
-            <input type="submit" class="layui-btn btn-default" style="float:right" value="确定" />
+            <button id="submit" class="layui-btn btn-default" style="float:right">确定</button>
         </form>
     </div>
 </div>
-@*<script id="LAY-msg-tpl" type="text/html">
-        <div class="info-box">
-            <div class="info-item">
-                <img class="info-img" src="{{ d.avatar }}" alt="">
-                <div class="info-text">
-                    <p class="title">
-                        <span class="name">{{ d.username }}</span>
-                        <span class="info-img">
-                            <i class="layui-icon layui-icon-praise"></i>
-                            {{ d.praise }}
-                        </span>
-                    </p>
-                    <p class="info-intr">
-                        {{ d.content }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </script>*@
+@section scripts{
+
+    <script>
+        layui.config({
+		  base: '/res/static/js/'
+		}).use(['blog'], function () {
+            var layer = layui.layer
+                , jquery = layui.jquery;
+            var $ = layui.$;
+
+            $("#submit").click(function () {
+                var formData = $("#form1").serializeArray();
+                $.ajax({
+                    url: "@Url.Content("~/Article/Comment")",
+                    type: "post",
+                    data: formData,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.code == 0) {
+                            layer.msg(res.msg);
+                        }
+                        else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}

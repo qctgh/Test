@@ -16,7 +16,7 @@ namespace PersonalWebsite.IService
         /// <param name="content">内容</param>
         /// <param name="ip">评论者IP</param>
         /// <returns></returns>
-        long Add(long articleId, string content, string ip);
+        long Add(long articleId, string content, string ip, bool isVisible);
 
         /// <summary>
         /// 添加评论(过滤词处理)

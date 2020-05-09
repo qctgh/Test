@@ -11,7 +11,7 @@ namespace ZSZ.Service
 {
     public class CommentService : ICommentService
     {
-        public long Add(long articleId, string content, string ip)
+        public long Add(long articleId, string content, string ip, bool isVisible)
         {
             using (MyDbContext ctx = new MyDbContext())
             {
@@ -19,6 +19,7 @@ namespace ZSZ.Service
                 comment.ArticleId = articleId;
                 comment.Content = content;
                 comment.IP = ip;
+                comment.IsVisible = isVisible;
                 ctx.Comments.Add(comment);
                 ctx.SaveChanges();
                 return comment.Id;
@@ -32,9 +33,6 @@ namespace ZSZ.Service
             {
                 result = "服务器返回错误";
             }
-
-
-
             using (MyDbContext ctx = new MyDbContext())
             {
                 CommentEntity comment = new CommentEntity();
@@ -53,7 +51,7 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                return ctx.Comments.Where(p => p.ArticleId == articleId).Select(p => ToDTO(p)).ToArray();
+                return ctx.Comments.Where(p => p.ArticleId == articleId).OrderByDescending(p => p.CreateDateTime).Select(p => ToDTO(p)).ToArray();
             }
         }
 
