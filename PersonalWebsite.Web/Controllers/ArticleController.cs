@@ -81,10 +81,14 @@ namespace PersonalWebsite.Web.Controllers
             string replaceMsg;
             //对用户输入的评论进行过滤处理
             FilterResult filterResult = FilterMsg(content, out replaceMsg);
-            if (filterResult == FilterResult.OK)
+
+
+            if (filterResult == FilterResult.Banned)
             {
-                content = replaceMsg;
-                CommentService.Add(id, content, ip, true);
+                //如果含有禁用词，则不向数据库中插入
+                result.Code = 1;
+                result.Msg = "您的评论内容含有禁用词汇，请注意文明用语";
+                return Json(result);
             }
             else if (filterResult == FilterResult.Mod)
             {
@@ -94,14 +98,13 @@ namespace PersonalWebsite.Web.Controllers
                 result.Msg = "请耐心等待审核";
                 return Json(result);
             }
-            else if (filterResult == FilterResult.Banned)
+            else
             {
-                //如果含有禁用词，则不向数据库中插入
-                result.Code = 1;
-                result.Msg = "您的评论内容含有禁用词汇，请注意文明用语";
+                content = replaceMsg;
+                CommentService.Add(id, content, ip, true);
+                result.Data = Url.Content("~/Article/Detail/" + id);
                 return Json(result);
             }
-            return RedirectToAction("Detail", new { Id = id });
         }
 
 
