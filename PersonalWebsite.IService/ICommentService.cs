@@ -32,6 +32,7 @@ namespace PersonalWebsite.IService
         /// <param name="articleId">文章ID</param>
         /// <returns></returns>
         CommentDTO[] GetByArticleId(long articleId);
+        CommentDTO[] GetByArticleId(long articleId, int pageSize, int currentIndex);
     }
 
 }

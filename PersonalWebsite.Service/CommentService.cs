@@ -55,6 +55,14 @@ namespace ZSZ.Service
             }
         }
 
+        public CommentDTO[] GetByArticleId(long articleId, int pageSize, int currentIndex)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.Comments.Where(p => p.ArticleId == articleId).OrderByDescending(p => p.CreateDateTime).Skip(currentIndex).Take(pageSize).Select(p => ToDTO(p)).ToArray();
+            }
+        }
+
         private CommentDTO ToDTO(CommentEntity entity)
         {
             CommentDTO dto = new CommentDTO();

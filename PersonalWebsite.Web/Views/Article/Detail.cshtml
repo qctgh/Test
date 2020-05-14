@@ -2,6 +2,12 @@
 @{
     ViewData["Title"] = Model.Article.Title;
 }
+<style>
+    a cite {
+        color: white !important;
+        background-color: #1E9FFF !important;
+    }
+</style>
 
 <div class="container container-message container-details">
     <div class="contar-wrap">
@@ -26,21 +32,52 @@
         </div>
         <div id="LAY-msg-box">
 
-            @foreach (var item in Model.Comments)
-            {
-                <div class="info-item">
-                    <img class="info-img" src="/res/static/images/info-img.png" alt="">
-                    <div class="info-text">
-                        <p class="title count">
-                            <span class="name">一片空白 @item.CreateDateTime.ToShortDateString()</span>
-                            <span class="info-img like"><i class="layui-icon layui-icon-praise"></i>@item.LikeCount</span>
-                        </p>
-                        <p class="info-intr">
-                            @item.Content
-                        </p>
+            @*@foreach (var item in Model.Comments)
+                {
+                    <div class="info-item">
+                        <img class="info-img" src="/res/static/images/info-img.png" alt="">
+                        <div class="info-text">
+                            <p class="title count">
+                                <span class="name">一片空白 @item.CreateDateTime.ToShortDateString()</span>
+                                <span class="info-img like"><i class="layui-icon layui-icon-praise"></i>@item.LikeCount</span>
+                            </p>
+                            <p class="info-intr">
+                                @item.Content
+                            </p>
+                        </div>
                     </div>
-                </div>
-            }
+                }*@
+
+            <div id="demo"></div>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        layui.config({
+		  base: '/res/static/js/'
+		}).use(['blog','flow'], function () {
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            var flow = layui.flow;
+            flow.load({
+                elem: '#demo' //指定列表容器
+                , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    $.get('@Url.Content("~/Article/CommentList/")' +'@Model.Article.Id'+'?page=' + page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            var html = '<div class="info-item"><img class="info-img"src="/res/static/images/info-img.png"alt=""><div class="info-text"><p class="title count"><span class="name">一片空白'+item.createDateTime+'</span><span class="info-img like"><i class="layui-icon layui-icon-praise"></i>'+item.likeCount+'</span></p><p class="info-intr">'+item.content+'</p></div></div>';
+                            lis.push(html);
+                        });
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.count);
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -47,7 +47,7 @@ namespace PersonalWebsite.Web.Controllers
             return Json(result);
         }
 
-
+        //文章详情
         public IActionResult Detail(long id)
         {
             var article = ArticleService.GetById(id);
@@ -57,6 +57,22 @@ namespace PersonalWebsite.Web.Controllers
             model.Comments = comments;
             return View(model);
         }
+        //评论列表
+        public IActionResult CommentList(long id, int page)
+        {
+            var comments = CommentService.GetByArticleId(id, 3, (page - 1) * 3);
+            //天花板，3.0取3,3.1取4
+            var count = Math.Ceiling(CommentService.GetByArticleId(id).Length / 3.0);
+            Result result = new Result
+            {
+                Code = 0,
+                Data = comments,
+                Count = Convert.ToInt32(count)
+            };
+            return Json(result);
+        }
+
+
         //写评论
         [HttpGet]
         public IActionResult Comment(long id)
