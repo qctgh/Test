@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PersonalWebsite.AdminWeb.Service;
 using PersonalWebsite.IService;
 
 namespace PersonalWebsite.AdminWeb
@@ -33,7 +34,7 @@ namespace PersonalWebsite.AdminWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddSingleton<IEsClientProvider, EsClientProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //初始化PersonalWebsite.Service所有服务

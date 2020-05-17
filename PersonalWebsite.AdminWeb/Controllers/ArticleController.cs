@@ -7,25 +7,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Nest;
+using Nest.JsonNetSerializer;
 using Newtonsoft.Json;
 using PersonalWebsite.AdminWeb.Models;
+using PersonalWebsite.AdminWeb.Service;
 using PersonalWebsite.IService;
 using Qiniu.Http;
 using Qiniu.IO;
 using Qiniu.IO.Model;
 using Qiniu.Util;
+using Result = PersonalWebsite.AdminWeb.Models.Result;
 
 namespace PersonalWebsite.AdminWeb.Controllers
 {
     public class ArticleController : Controller
     {
         private readonly ILogger<ArticleController> _logger;
+        private readonly ElasticClient _client;
         protected IArticleService ArticleService { get; set; }
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ArticleController(ILogger<ArticleController> logger, IArticleService ArticleService, IHostingEnvironment hostingEnvironment)
+        public ArticleController(ILogger<ArticleController> logger, IEsClientProvider clientProvider, IArticleService ArticleService, IHostingEnvironment hostingEnvironment)
         {
             _logger = logger;
+            _client = clientProvider.GetClient();
             this.ArticleService = ArticleService;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -58,6 +64,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
         public IActionResult Add(ArticleModel model)
         {
             ArticleService.AddArticle(model.Title, model.ChannelId, model.Content, model.SupportCount, model.IsFirst, 1);
+            _client.IndexDocument(model);
             _logger.LogInformation($"添加文章成功，标题：{model.Title}");
             return Json(new Result { Code = 1, Msg = "保存成功" });
         }
@@ -111,7 +118,16 @@ namespace PersonalWebsite.AdminWeb.Controllers
             _logger.LogWarning($"删除文章，文章ID：{id}");
             return Json(new Result { Code = 0, Msg = "删除成功" });
         }
+        //todo:搜索
+        public IActionResult Search(string key)
+        {
+            var result = _client.Search<ArticleModel>(s => s
+                 .From(0)
+                 .Size(10)
+                 .Query(q => q.Match(m => m.Field(f => f.Content).Query(key)))).Documents;
 
+            return Content(JsonConvert.SerializeObject(result.ToList()));
+        }
 
 
         //上传图片

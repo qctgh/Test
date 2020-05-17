@@ -4,20 +4,22 @@
 }
 
 @section toolbar{
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">标题</label>
-            <div class="layui-input-block">
-                <input type="text" name="poster" placeholder="请输入" autocomplete="off" class="layui-input">
+    <form asp-action="Search" method="post">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="key" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <button class="layui-btn layuiadmin-btn-forum-list" lay-submit="" lay-filter="LAY-app-forumlist-search">
+                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                </button>
             </div>
         </div>
-
-        <div class="layui-inline">
-            <button class="layui-btn layuiadmin-btn-forum-list" lay-submit="" lay-filter="LAY-app-forumlist-search">
-                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-            </button>
-        </div>
-    </div>
+    </form>
 }
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
