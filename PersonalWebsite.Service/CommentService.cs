@@ -25,33 +25,45 @@ namespace ZSZ.Service
                 return comment.Id;
             }
         }
-
-        public string AddComment(long articleId, string content, string ip)
+        public bool Del(long id)
         {
-            string result = "";
-            if (content.Contains("<") || content.Contains(">"))
-            {
-                result = "服务器返回错误";
-            }
             using (MyDbContext ctx = new MyDbContext())
             {
-                CommentEntity comment = new CommentEntity();
-                comment.ArticleId = articleId;
-                comment.Content = content;
-                comment.IP = ip;
-                ctx.Comments.Add(comment);
-                ctx.SaveChanges();
+                var comment = ctx.Comments.Where(p => p.Id == id).FirstOrDefault();
+                comment.IsDeleted = true;
+                return ctx.SaveChanges() > 0;
             }
-
-            return result;
         }
+        public bool Check(long id)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                var comment = ctx.Comments.Where(p => p.Id == id).FirstOrDefault();
+                comment.IsVisible = true;
+                return ctx.SaveChanges() > 0;
 
+            }
+        }
+        public CommentDTO[] GetAll()
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.Comments.Where(p => p.IsVisible == false).OrderByDescending(p => p.CreateDateTime).Select(p => ToDTO(p)).ToArray();
+            }
+        }
+        public CommentDTO[] GetAll(int pageSize, int currentIndex)
+        {
+            using (MyDbContext ctx = new MyDbContext())
+            {
+                return ctx.Comments.Where(p => p.IsVisible == false).OrderByDescending(p => p.CreateDateTime).Skip(currentIndex).Take(pageSize).Select(p => ToDTO(p)).ToArray();
+            }
+        }
 
         public CommentDTO[] GetByArticleId(long articleId)
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                return ctx.Comments.Where(p => p.ArticleId == articleId).OrderByDescending(p => p.CreateDateTime).Select(p => ToDTO(p)).ToArray();
+                return ctx.Comments.Where(p => p.ArticleId == articleId && p.IsVisible == true).OrderByDescending(p => p.CreateDateTime).Select(p => ToDTO(p)).ToArray();
             }
         }
 
@@ -59,7 +71,7 @@ namespace ZSZ.Service
         {
             using (MyDbContext ctx = new MyDbContext())
             {
-                return ctx.Comments.Where(p => p.ArticleId == articleId).OrderByDescending(p => p.CreateDateTime).Skip(currentIndex).Take(pageSize).Select(p => ToDTO(p)).ToArray();
+                return ctx.Comments.Where(p => p.ArticleId == articleId && p.IsVisible == true).OrderByDescending(p => p.CreateDateTime).Skip(currentIndex).Take(pageSize).Select(p => ToDTO(p)).ToArray();
             }
         }
 
