@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PersonalWebsite.DTO;
 using PersonalWebsite.IService;
@@ -17,12 +18,13 @@ namespace PersonalWebsite.Web.Controllers
         //重用
         private static string bannedExprKey = typeof(ArticleController) + "BannedExpr";
         private static string modExprKey = typeof(ArticleController) + "ModExpr";
-
+        private readonly ILogger<ArticleController> _logger;
         IArticleService ArticleService { get; set; }
         ICommentService CommentService { get; set; }
         IFilterWordService FilterWordService { get; set; }
-        public ArticleController(IArticleService ArticleService, ICommentService CommentService, IFilterWordService FilterWordService)
+        public ArticleController(ILogger<ArticleController> logger, IArticleService ArticleService, ICommentService CommentService, IFilterWordService FilterWordService)
         {
+            _logger = logger;
             this.ArticleService = ArticleService;
             this.CommentService = CommentService;
             this.FilterWordService = FilterWordService;
@@ -101,6 +103,7 @@ namespace PersonalWebsite.Web.Controllers
 
             if (filterResult == FilterResult.Banned)
             {
+                _logger.LogInformation($"{ip}输入包含禁用词内容：{content}");
                 //如果含有禁用词，则不向数据库中插入
                 result.Code = 1;
                 result.Msg = "您的评论内容含有禁用词汇，请注意文明用语";

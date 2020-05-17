@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PersonalWebsite.AdminWeb.Models;
 using PersonalWebsite.IService;
@@ -18,11 +19,13 @@ namespace PersonalWebsite.AdminWeb.Controllers
 {
     public class ArticleController : Controller
     {
+        private readonly ILogger<ArticleController> _logger;
         protected IArticleService ArticleService { get; set; }
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ArticleController(IArticleService ArticleService, IHostingEnvironment hostingEnvironment)
+        public ArticleController(ILogger<ArticleController> logger, IArticleService ArticleService, IHostingEnvironment hostingEnvironment)
         {
+            _logger = logger;
             this.ArticleService = ArticleService;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -55,6 +58,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
         public IActionResult Add(ArticleModel model)
         {
             ArticleService.AddArticle(model.Title, model.ChannelId, model.Content, model.SupportCount, model.IsFirst, 1);
+            _logger.LogInformation($"添加文章成功，标题：{model.Title}");
             return Json(new Result { Code = 1, Msg = "保存成功" });
         }
         [HttpGet]
@@ -104,6 +108,7 @@ namespace PersonalWebsite.AdminWeb.Controllers
         public IActionResult Del(long id)
         {
             ArticleService.DeleteById(id);
+            _logger.LogWarning($"删除文章，文章ID：{id}");
             return Json(new Result { Code = 0, Msg = "删除成功" });
         }
 
