@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PersonalWebsite.AdminWeb.Service
+namespace PersonalWebsite.Web.Service
 {
     public class EsClientProvider : IEsClientProvider
     {

@@ -11,7 +11,7 @@ namespace PersonalWebsite.Service
 {
     public class ArticleService : IArticleService
     {
-        public bool AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId)
+        public ArticleDTO AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId)
         {
 
             using (MyDbContext ctx = new MyDbContext())
@@ -24,7 +24,8 @@ namespace PersonalWebsite.Service
                 article.IsFirst = isFirst;
                 article.UserId = userId;
                 ctx.Articles.Add(article);
-                return ctx.SaveChanges() > 0;
+                ctx.SaveChanges();
+                return ctx.Articles.Include(p => p.Channel).Include(p => p.User).AsNoTracking().Where(w => w.Id == article.Id).Select(p => ToDTO(p)).FirstOrDefault();
             }
         }
 

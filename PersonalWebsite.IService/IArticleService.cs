@@ -12,7 +12,7 @@ namespace PersonalWebsite.IService
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        bool AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId);
+        ArticleDTO AddArticle(string title, long channelId, string content, int supportCount, bool isFirst, long userId);
         /// <summary>
         /// 获取全部记录
         /// </summary>

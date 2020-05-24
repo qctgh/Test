@@ -12,6 +12,7 @@ using Nest.JsonNetSerializer;
 using Newtonsoft.Json;
 using PersonalWebsite.AdminWeb.Models;
 using PersonalWebsite.AdminWeb.Service;
+using PersonalWebsite.DTO;
 using PersonalWebsite.IService;
 using Qiniu.Http;
 using Qiniu.IO;
@@ -63,8 +64,9 @@ namespace PersonalWebsite.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Add(ArticleModel model)
         {
-            ArticleService.AddArticle(model.Title, model.ChannelId, model.Content, model.SupportCount, model.IsFirst, 1);
-            _client.IndexDocument(model);
+            var article = ArticleService.AddArticle(model.Title, model.ChannelId, model.Content, model.SupportCount, model.IsFirst, 1);
+            //保存到缓存
+            IndexResponse response = _client.IndexDocument(article);
             _logger.LogInformation($"添加文章成功，标题：{model.Title}");
             return Json(new Result { Code = 1, Msg = "保存成功" });
         }
@@ -121,12 +123,16 @@ namespace PersonalWebsite.AdminWeb.Controllers
         //todo:搜索
         public IActionResult Search(string key)
         {
-            var result = _client.Search<ArticleModel>(s => s
+            var articleDTOs = _client.Search<ArticleDTO>(s => s
                  .From(0)
                  .Size(10)
-                 .Query(q => q.Match(m => m.Field(f => f.Content).Query(key)))).Documents;
-
-            return Content(JsonConvert.SerializeObject(result.ToList()));
+                 .Query(q => q.QueryString(qs => qs.Query(key).DefaultOperator(Operator.And)))).Documents.ToArray();
+            //.Query(q => q.Match(m => m.Field(f => f.Content).Query(key)))).Documents;
+            Result result = new Result();
+            result.Code = 0;
+            result.Data = articleDTOs;
+            result.Count = articleDTOs.Length;
+            return View("List", result);
         }
 
 
