@@ -12,7 +12,7 @@ namespace PersonalWebsite.Web.Service
         private readonly IConfiguration _configuration;
         private ElasticClient _client;
         public EsClientProvider(IConfiguration configuration)
-        {
+        { 
             _configuration = configuration;
         }
 
