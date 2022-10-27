@@ -1,0 +1,10 @@
+﻿@model StageModel
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model.Stages)
+{
+    <li><a asp-action="Index" asp-controller="Stage" asp-route-id="@item.Id">@item.Name</a></li>
+}

@@ -1,0 +1,53 @@
+﻿@model StageIndexModel
+@{
+    ViewData["Title"] = "阶段";
+}
+
+<!-- masonry
+    ================================================== -->
+<section id="bricks">
+
+    <div class="row masonry">
+        <h1></h1>
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+
+            @foreach (var item in Model.SongMenus)
+            {
+                <article class="brick entry animate-this">
+
+                    <div class="entry-thumb">
+                        <a asp-action="Detail" asp-controller="SongMenu" asp-route-id="@item.Id" class="thumb-link">
+                            <img src="@item.CoverImgSrc" alt="building">
+                        </a>
+                    </div>
+
+                    <div class="entry-text">
+                        <div class="entry-header">
+
+                            <div class="entry-meta">
+                                <span class="cat-links">
+                                    <a href="#">群星</a>
+                                    <a href="#">古典</a>
+                                </span>
+                            </div>
+
+                            <h1 class="entry-title"><a href="single-standard.html">@item.Name</a></h1>
+
+                        </div>
+                        <div class="entry-excerpt">
+                            @item.Describe
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+            }
+
+        </div> <!-- end brick-wrapper -->
+
+    </div> <!-- end row -->
+
+
+</section> <!-- end bricks -->

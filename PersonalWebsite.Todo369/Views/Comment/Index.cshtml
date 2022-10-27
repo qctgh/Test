@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "留言";
+}
+@await Component.InvokeAsync("Channel")
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8 content detail">
+            <div class="fly-panel detail-box" id="flyReply">
+                <div class="layui-form layui-form-pane">
+                    <form asp-action="Add" asp-controller="Comment" method="post">
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block">
+                                <textarea name="content" lay-verify="required" placeholder="请输入内容" class="layui-textarea" style="height: 150px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">人类验证</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vercode" lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline">
+                                <img id="VeCode" title="看不清？换一张" src="@Url.Action("ValidateCode","VerifyCode") " style="cursor: pointer;border-radius: 4px;" onclick="this.src=this.src+'?'" />
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                        </div>
+                    </form>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>大家都说了些什么？</legend>
+                </fieldset>
+                <ul class="jieda" id="jieda"></ul>
+                <div style="text-align: center">
+                </div>
+
+
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        layui.use(['jquery','flow'], function () {
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            var flow = layui.flow;
+            flow.load({
+                elem: '#jieda' //指定列表容器
+                , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    $.get('@Url.Content("~/Comment/Data?page=")' + page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            var html = '<li><a></a><div class="detail-about detail-about-reply"><a class="fly-avatar"href="#"><img src="/res/images/avatar/0.jpg"></a><div class="fly-detail-user"><a href="#"class="fly-link"><cite>' + item.ip +'</cite></a></div><div class="detail-hits"><span>'+item.commentDate+'</span></div></div><div class="detail-body jieda-body photos">'+item.content+'</div></li>';
+                            lis.push(html);
+                        });
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.count);
+                    });
+                }
+            });
+        });
+    </script>
+}

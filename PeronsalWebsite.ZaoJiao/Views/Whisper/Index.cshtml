@@ -1,0 +1,54 @@
+﻿@model WhisperIndexModel
+
+@{
+    ViewData["Title"] = "微语";
+}
+
+<!-- masonry
+    ================================================== -->
+<section id="bricks">
+
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+
+            @foreach (var item in Model.Articles)
+            {
+                <article class="brick entry format-standard animate-this">
+
+                    <div class="entry-thumb">
+                        <a asp-action="Detail" asp-controller="Whisper" asp-route-id="@item.Id" class="thumb-link">
+                            <img src="@("https://todo369.top/fileserver"+item.Cover)" alt="building"/>
+                        </a>
+                    </div>
+
+                    <div class="entry-text">
+                        <div class="entry-header">
+
+                            <div class="entry-meta">
+                                <span class="cat-links">
+                                    @item.PublishDate
+                                </span>
+                            </div>
+
+                            <h1 class="entry-title"><a asp-action="Detail" asp-controller="Whisper" asp-route-id="@item.Id">@item.Title</a></h1>
+
+                        </div>
+                        <div class="entry-excerpt">
+                            @item.Abstract
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+            }
+
+        </div> <!-- end brick-wrapper -->
+
+    </div> <!-- end row -->
+
+
+</section> <!-- end bricks -->
+

@@ -1,0 +1,140 @@
+﻿
+@{
+    Layout = "_LayoutPopups";
+}
+<style>
+    a {
+        color: #333;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #009688;
+        }
+
+    [lay-href], [lay-tips], [layadmin-event] {
+        cursor: pointer;
+    }
+
+    .layuiadmin-card-text {
+        background-color: #f8f8f8;
+        color: #777;
+        padding: 24px;
+    }
+
+        .layuiadmin-card-text .layui-text-top i {
+            margin-right: 10px;
+            font-size: 36px;
+            color: #009688;
+        }
+
+        .layuiadmin-card-text .layui-text-top a {
+            line-height: 36px;
+            font-size: 16px;
+            vertical-align: top;
+        }
+
+        .layuiadmin-card-text .layui-text-center {
+            height: 69px;
+            line-height: 22px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .layuiadmin-card-text .layui-text-bottom {
+            position: relative;
+        }
+
+            .layuiadmin-card-text .layui-text-bottom a {
+                color: #777;
+                font-size: 12px;
+                text-overflow: ellipsis;
+                word-break: break-all;
+            }
+
+            .layuiadmin-card-text .layui-text-bottom span {
+                color: #CCC;
+                font-size: 12px;
+                position: absolute;
+                right: 0;
+            }
+</style>
+
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-fonts-html"></i><a asp-action="Index" asp-controller="Format" asp-route-id="html" >HTML格式化/JS</a></div>
+                <p class="layui-text-center">可以对JS，HTML，混合HTML和JS进行格式化排版，整齐的进行显示。可以对JS进行加密，加密压缩。</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Format" asp-route-id="html">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-fonts-clear"></i><a asp-action="Index" asp-controller="Format" asp-route-id="json">Json格式化</a></div>
+                <p class="layui-text-center">可以对JS，HTML，混合HTML和JS进行格式化排版，整齐的进行显示。可以对JS进行加密，加密压缩。</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Format" asp-route-id="json">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-fonts-clear"></i><a asp-action="Index" asp-controller="Format" asp-route-id="xml">Xml格式化</a></div>
+                <p class="layui-text-center">可以对JS，HTML，混合HTML和JS进行格式化排版，整齐的进行显示。可以对JS进行加密，加密压缩。</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Format" asp-route-id="xml">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-rmb"></i><a asp-action="Index" asp-controller="Conver">人民币转换大写</a></div>
+                <p class="layui-text-center">输入人民币金额的小写阿拉伯数字转换成汉字</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Conver">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-list"></i><a asp-action="Index" asp-controller="Regex">正则表达式</a></div>
+                <p class="layui-text-center">常用正则表达式</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Regex">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-vercode"></i><a asp-action="Index" asp-controller="Security" asp-route-id="aes">AES加密/解密</a></div>
+                <p class="layui-text-center">AES加密、解密、在线工具</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Security" asp-route-id="aes">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-fonts-code"></i><a asp-action="Index" asp-controller="Security" asp-route-id="base64">Base64编码/解码</a></div>
+                <p class="layui-text-center">Base64加密、解密、在线编码工具、</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Security" asp-route-id="base64">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-vercode"></i><a asp-action="Index" asp-controller="Security" asp-route-id="md5">MD5加密</a></div>
+                <p class="layui-text-center">MD5加密、在线加密工具</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Security" asp-route-id="md5">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm4">
+            <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-senior"></i><a asp-action="Index" asp-controller="Event">事件倒计时</a></div>
+                <p class="layui-text-center">记录一个事件还剩多少时间，时间结束后发邮件提醒</p>
+                <p class="layui-text-bottom"><a asp-action="Index" asp-controller="Event">进入</a><span>7 天前</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        layui.use('element', function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        });
+    </script>
+}

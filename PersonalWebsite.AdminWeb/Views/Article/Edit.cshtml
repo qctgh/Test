@@ -1,0 +1,96 @@
+﻿@model ArticleModel
+@{
+    ViewData["Title"] = "编辑文章";
+    ViewData["BreadCrumb"] = "主页 / 文章管理 / 编辑文章";
+}
+@section toolbar{
+    <h3>编辑文章</h3>
+}
+<link href="~/res/css/global.css" rel="stylesheet" />
+<form id="form1" class="layui-form" asp-action="Edit" asp-controller="Article" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">频道</label>
+        <div class="layui-input-block">
+            <select name="ChannelId" lay-verify="required">
+                <option value=""></option>
+                @foreach (ChannelModel item in ViewBag.Channels)
+                {
+                    if (item.Channels.Count <= 0)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+
+                    }
+                    else
+                    {
+                        <optgroup label="@item.Name">
+                            @foreach (var childItem in item.Channels)
+                            {
+                                <option value="@childItem.Id" selected="@(Model.ChannelId==childItem.Id)">@childItem.Name</option>
+                            }
+                        </optgroup>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Title" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">摘要</label>
+        <div class="layui-input-block">
+            <textarea asp-for="Abstract" placeholder="请输入摘要" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别</label>
+        <div class="layui-input-block">
+            <select asp-for="Classification" lay-verify="required">
+                <option value="1" selected>普通文章</option>
+                <option value="2">封面文章</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面路径</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Cover" autocomplete="off" placeholder="请输入封面的图片路径" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支持次数</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="SupportCount" lay-verify="required" placeholder="请输入次数" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否置顶</label>
+        <div class="layui-input-block">
+            @*<input type="checkbox" asp-for="IsFirst" lay-skin="switch" lay-text="ON|OFF">*@
+            <input type="radio" asp-for="IsFirst" value="True" title="是">
+            <input type="radio" asp-for="IsFirst" value="False" title="否">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea asp-for="Content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style=" height: 600px;"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="*" lay-submit>保存</button>
+        </div>
+    </div>
+</form>

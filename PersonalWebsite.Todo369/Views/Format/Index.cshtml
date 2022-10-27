@@ -1,0 +1,65 @@
+﻿@model FormatIndexModel
+@{
+    Layout = "_LayoutPopups";
+}
+
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        <li class="@(Model.Current=="html"?"layui-this":"")">html格式化</li>
+        <li class="@(Model.Current=="css"?"layui-this":"")">css格式化</li>
+        <li class="@(Model.Current=="json"?"layui-this":"")">json格式化</li>
+        <li class="@(Model.Current=="xml"?"layui-this":"")">xml格式化</li>
+        <li class="@(Model.Current=="sql"?"layui-this":"")">sql格式化</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item @(Model.Current=="html"?"layui-show":"")">
+            <form asp-action="Index" method="post">
+                <textarea asp-for="HtmlText" style="width:48%;height:320px;" placeholder="请输入html代码"></textarea>
+                <textarea style="width:48%;height:320px;">@(Model?.HtmlResult)</textarea>
+                <button class="layui-btn" asp-route-id="html" asp-route-type="format">格式化</button>
+                <button class="layui-btn" asp-route-id="html" asp-route-type="compress">压缩</button>
+            </form>
+        </div>
+        <div class="layui-tab-item @(Model.Current=="css"?"layui-show":"") ">
+            <form asp-action="Index" method="post">
+                <textarea asp-for="CSSText" style="width:48%;height:320px;" placeholder="非常抱歉，正在开发中……"></textarea>
+                <textarea style="width:48%;height:320px;">@(Model?.CSSResult)</textarea>
+                <button class="layui-btn" asp-route-id="css" asp-route-type="format">格式化</button>
+                <button class="layui-btn" asp-route-id="css" asp-route-type="compress">压缩</button>
+            </form>
+        </div>
+        <div class="layui-tab-item @(Model.Current=="json"?"layui-show":"")">
+            <form asp-action="Index" method="post">
+                <textarea asp-for="JsonText" style="width:48%;height:320px;" placeholder="请输入json代码"></textarea>
+                <textarea style="width:48%;height:320px;">@(Model?.JsonResult)</textarea>
+                <button class="layui-btn" asp-route-id="json" asp-route-type="format">格式化</button>
+                <button class="layui-btn" asp-route-id="json" asp-route-type="compress">压缩</button>
+            </form>
+        </div>
+        <div class="layui-tab-item @(Model.Current=="xml"?"layui-show":"")">
+            <form asp-action="Index" method="post">
+                <textarea asp-for="XmlText" style="width:48%;height:320px;" placeholder="请输入xml代码"></textarea>
+                <textarea style="width:48%;height:320px;">@(Model?.XmlResult)</textarea>
+                <button class="layui-btn" asp-route-id="xml" asp-route-type="format">格式化</button>
+            </form>
+        </div>
+        <div class="layui-tab-item @(Model.Current=="sql"?"layui-show":"")">
+            <form asp-action="Index" method="post">
+                <textarea asp-for="SqlText" style="width:48%;height:320px;" placeholder="非常抱歉，正在开发中……"></textarea>
+                <textarea style="width:48%;height:320px;">@(Model?.SqlResult)</textarea>
+                <button class="layui-btn" asp-route-id="sql" asp-route-type="format">格式化</button>
+                <button class="layui-btn" asp-route-id="sql" asp-route-type="compress">压缩</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        layui.use('element', function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        });
+    </script>
+}

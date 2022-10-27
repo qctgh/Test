@@ -1,0 +1,158 @@
+﻿@model ArticleDetailModel
+@{
+    Random r = new Random();
+    ViewData["Title"] = Model.Article.Title;
+}
+
+
+@await Component.InvokeAsync("Channel")
+
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8 content detail">
+            <div class="fly-panel detail-box">
+                <h1>@Model.Article.Title</h1>
+                <div class="fly-detail-info">
+                    <div class="fly-admin-box">
+                        <a asp-action="Index" asp-controller="Article" asp-route-id="@Model.Article.ChannelCode"><span class="layui-btn layui-btn-xs">@Model.Article.ChannelName</span></a>
+                        @if (Model.Article.IsFirst)
+                        {
+                            <span>|</span>
+                            <span class="layui-badge layui-bg-black">置顶</span>
+                            <span class="layui-badge layui-bg-red">加精</span>
+                        }
+                    </div>
+                    <span class="fly-list-nums">
+                        <a href="#love" title="喜欢"><i class="layui-icon layui-icon-heart"></i> @Model.Article.SupportCount</a>
+                        <a href="#flyReply" title="回答"><i class="iconfont icon-pinglun1"></i> @Model.Article.CommentsCount</a>
+                        @*<i class="iconfont icon-liulanyanjing" title="人气"></i>*@
+                    </span>
+                </div>
+                <div class="detail-about">
+                    <a class="fly-avatar">
+                        <img src="~/res/images/avatar/0.jpg">
+                    </a>
+                    <div class="fly-detail-user">
+                        <a href="#" class="fly-link">
+                            <cite>@Model.Article.UserName</cite>
+                        </a>
+                        <span>@Model.Article.CreateDateTime.ToString("yyyy-MM-dd")</span>
+                    </div>
+                    <div class="detail-hits">
+                        <span style="padding-right: 10px;">我是一只小可爱</span>
+                    </div>
+                </div>
+                <div class="detail-body photos">
+                    @Html.Raw(Model.Article.Content)
+                </div>
+                <div style="text-align: center">
+                    <div id="page"></div>
+                </div>
+                <!--点赞-->
+                <div id="love" style="text-align:right">
+                    <form asp-action="Love" asp-controller="Article" asp-route-id="@Model.Article.Id" method="post">
+                        <button class="layui-btn layui-btn-radius" lay-filter="*" lay-submit><i class="layui-icon layui-icon-heart-fill" style="font-size:25px;"></i>喜欢</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="fly-panel detail-box" id="flyReply">
+                <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                    <legend>回帖</legend>
+                </fieldset>
+
+                <ul class="jieda" id="jieda">
+                    @if (Model.Comments.Length <= 0)
+                    {
+                        <li class="fly-none">消灭零回复</li>
+                    }
+
+                    @foreach (var item in Model.Comments)
+                    {
+
+                        <li>
+                            <a></a>
+                            <div class="detail-about detail-about-reply">
+                                <a class="fly-avatar" href="#">
+                                    <img src="~/res/images/avatar/@(r.Next(11)).jpg">
+                                </a>
+                                <div class="fly-detail-user">
+                                    <a href="#" class="fly-link">
+                                        <cite>小笨蛋</cite>
+                                    </a>
+                                </div>
+                                <div class="detail-hits">
+                                    <span>@item.CommentDate</span>
+                                </div>
+
+                            </div>
+                            <div class="detail-body jieda-body photos">
+                                @item.Content
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+                <div style="text-align: center">
+                </div>
+
+                <div class="layui-form layui-form-pane">
+                    <form asp-action="Comment" asp-controller="Article" asp-route-id="@Model.Article.Id" method="post">
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block">
+                                <textarea name="content" lay-verify="required" placeholder="请输入内容" class="layui-textarea" style="height: 150px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">人类验证</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vercode" lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline">
+                                <img id="VeCode" title="看不清？换一张" src="@Url.Action("ValidateCode","VerifyCode") " style="cursor: pointer;border-radius: 4px;" onclick="this.src=this.src+'?'" />
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <input type="hidden" name="artId" value="@Model.Article.Id">
+                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var articles = '@(Model.ArticleIds)'.split(",");
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //只显示上一页、下一页
+            laypage.render({
+                elem: 'page'
+                , count: articles.length
+                , limit: 1
+                , curr:'@Model.CurrentIndex'
+                , prev: '上一篇'
+                , next: '下一篇'
+                , layout: ['prev', 'next']
+                , jump: function (obj, first) {
+                    if (!first) {
+                        window.location = '@Url.Content("~/Article/Detail/")' + articles[obj.curr-1];
+                    }
+                }
+            });
+        });
+    </script>
+}

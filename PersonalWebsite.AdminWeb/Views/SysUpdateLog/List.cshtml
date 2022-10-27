@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "系统更新日志管理";
+    ViewData["BreadCrumb"] = "主页 / 系统更新日志管理";
+}
+
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加更新日志</button>
+    </div>
+</script>
+<table class="layui-hide" id="myTable" lay-filter="myTable" lay-even=""></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+@section scripts{
+
+    <script>
+        layui.use(['fly', 'table'], function () {
+                var table = layui.table
+                    , $ = layui.$
+                    , fly = layui.fly;
+
+                //第一个实例
+                table.render({
+                    elem: '#myTable'
+                    , url: '@Url.Content("~/SysUpdateLog/List")' //数据接口
+                    , method: 'post'
+                    , page: true //开启分页
+                    , limit: 10
+                    , cellMinWidth: 150
+                    , toolbar: '#toolbarDemo'
+                    , title: '数据列表'
+                    , cols: [[ //表头
+                          { field: 'id', title: 'ID', sort: true }
+                        , { field: 'content', title: '内容', sort: true, width: 530 }
+                        , { field: 'createDateTime', title: '创建时间', sort: true }
+                        , { field: 'isDelete', title: '是否显示', sort: true }
+                        , { field: 'deleteDateTime', title: '删除时间', sort: true }
+                        , { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ]]
+                });
+                //头工具栏事件
+                table.on('toolbar(myTable)', function (obj) {
+                    console.log(obj);
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    switch (obj.event) {
+                        case 'add':
+                            location.href = '@Url.Content("~/SysUpdateLog/Add")';
+                            break;
+                    };
+                });
+                //监听行工具事件
+                table.on('tool(myTable)', function (obj) {
+                    var data = obj.data;
+                    //console.log(obj)
+                    switch (obj.event) {
+
+                        //编辑
+                        case 'edit':
+                            {
+                                location.href = '@Url.Content("~/Article/Edit/")'+data.id;
+                            } break;
+                        //删除
+                        case 'del':
+                            {
+                                layer.confirm('真的删除行么', function (index) {
+                                    fly.json('@Url.Content("~/Article/Del")', { 'id': data.id }, function (res) {
+                                        layer.msg(res.msg);
+                                        });
+                                    obj.del();
+                                    layer.close(index);
+                                });
+                            } break;
+
+                    }
+                });
+        });
+    </script>
+
+}

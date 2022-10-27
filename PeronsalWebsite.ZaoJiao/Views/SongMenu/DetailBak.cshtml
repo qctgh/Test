@@ -1,0 +1,96 @@
+﻿@model SongMenuDetailModel
+@{
+    ViewData["Title"] = "详情";
+}
+
+<!-- content
+   ================================================== -->
+<section id="content-wrap" class="blog-single">
+    <div class="row">
+        <div class="col-twelve">
+
+            <article class="format-standard">
+
+                <div class="content-media">
+                    <div class="post-thumb">
+                        <link href="~/lib/player/css/style.css" rel="stylesheet" />
+                        <link href="~/lib/player/css/styles.css" rel="stylesheet" />
+                        <div id="example-wrapper" style="height:600px;">
+                            @*<ul id="example-size-picker">
+                                    <li style="float:left;">@Model.SongMenu.Name</li>
+                                    <li data-size="mobile">手机</li>
+                                    <li data-size="large">标准</li>
+                                    <li data-size="full">全屏</li>
+                                </ul>*@
+                            <div id="example-outer">
+                                <div id="example" data-size="full">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="primary-content">
+                    <h1 class="page-title">@Model.SongMenu.Name</h1>
+                    <p>@Model.SongMenu.Describe</p>
+                </div>
+                <div class="pagenav group">
+                    <div class="prev-nav">
+                        <a href="#" rel="prev">
+                            <span>Previous</span>
+                            Tips on Minimalist Design
+                        </a>
+                    </div>
+                    <div class="next-nav">
+                        <a href="#" rel="next">
+                            <span>Next</span>
+                            Less Is More
+                        </a>
+                    </div>
+                </div>
+
+            </article>
+
+
+        </div> <!-- end col-twelve -->
+    </div> <!-- end row -->
+
+    <div class="comments-wrap">
+        <div id="comments" class="row">
+            <div class="col-full">
+
+                <h3>5 Comments</h3>
+
+
+
+            </div> <!-- end col-full -->
+        </div> <!-- end row comments -->
+    </div> <!-- end comments-wrap -->
+
+</section> <!-- end content -->
+@section scripts{
+    <script src="~/lib/player/js/jquery.min.js"></script>
+    <script src="~/lib/player/js/ttw-clarity-player.js"></script>
+    <script src="~/lib/player/js/yepnope.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        var myPlaylist = JSON.parse('@Html.Raw(Model.Songs)');
+
+        var clarity = $('#example').ttwClarityPlayer(myPlaylist, {
+            jPlayer: {
+                supplied: 'mp3',
+                errorAlerts: true,
+                autoPlay: true,
+                warningAlerts: true,
+                consoleAlerts: true
+            }
+        });
+
+        $('#example-size-picker').on('click', 'li', function () {
+            $('#example').attr('data-size', $(this).data('size'));
+            clarity.manageLayout();
+        });
+    });
+    </script>
+}

@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "定时管理";
+}
+
+@section toolbar{
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">接收人邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="poster" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layuiadmin-btn-forum-list" lay-submit="" lay-filter="LAY-app-forumlist-search">
+                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+            </button>
+        </div>
+    </div>
+}
+
+<table class="layui-hide" id="myTable" lay-filter="myTable" lay-even=""></table>
+
+@section scripts{
+
+    <script>
+        layui.use(['table','layer'], function () {
+            var table = layui.table
+                , layer = layui.layer;
+            //第一个实例
+            table.render({
+                elem: '#myTable'
+                , url: '@Url.Content("~/Timing/List")' //数据接口
+                , method: 'post'
+                , page: true //开启分页
+                , limit: 10
+                , cellMinWidth: 150
+                , toolbar: '#toolbarDemo'
+                , title: '数据列表'
+                , cols: [[ //表头
+                      { field: 'id', title: 'ID', sort: true }
+                    , { field: 'time', title: '时间', sort: true }
+                    , { field: 'weeks', title: '重复', sort: true }
+                    , { field: 'userId', title: '用户', sort: true }
+                    , { field: 'createDateTime', title: '创建时间', sort: true }
+                ]]
+            });
+
+        });
+    </script>
+
+}

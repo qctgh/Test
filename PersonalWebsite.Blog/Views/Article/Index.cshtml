@@ -1,0 +1,189 @@
+﻿@model ArticleIndexModel
+@{
+    ViewData["Title"] = "博客";
+}
+
+<div class="doc-container" id="doc-container">
+    <div class="container-fixed">
+        <div class="col-content">
+            <div class="inner">
+                <article class="article-list bloglist" id="LAY_bloglist">
+                    @if (Model.TopArticles != null)
+                    {
+
+                        <section class="article-item zoomIn article">
+                            <div class="fc-flag">置顶</div>
+                            <h5 class="title">
+                                <span class="fc-blue">【原创】</span>
+                                <a asp-action="Detail" asp-controller="Article" asp-route-id="@Model.TopOneArticle.Id">@Model.TopOneArticle.Title</a>
+                            </h5>
+                            <div class="time">
+                                <span class="day">@Model.TopOneArticle.CreateDateTime.Day</span>
+                                <span class="month fs-18">@Model.TopOneArticle.CreateDateTime.Month<span class="fs-14">月</span></span>
+                                <span class="year fs-18 ml10">@Model.TopOneArticle.CreateDateTime.Year</span>
+                            </div>
+                            <div class="content">
+                                <a asp-action="Detail" asp-controller="Article" asp-route-id="@Model.TopOneArticle.Id" class="cover img-light">
+                                    <img src="@($"https://todo369.top/fileserver"+Model.TopOneArticle.Cover)">
+                                </a>
+                                @Model.TopOneArticle.Abstract
+                            </div>
+                            <div class="read-more">
+                                <a asp-action="Detail" asp-controller="Article" asp-route-id="@Model.TopOneArticle.Id" class="fc-black f-fwb">继续阅读</a>
+                            </div>
+                            <aside class="f-oh footer">
+                                <div class="f-fl tags">
+                                    <span class="fa fa-tags fs-16"></span>
+                                    <a class="tag">@Model.TopOneArticle.ChannelName</a>
+                                </div>
+                                <div class="f-fr">
+                                    <span class="read">
+                                        <i class="fa fa-eye fs-16"></i>
+                                        <i class="num">@Model.TopOneArticle.SupportCount</i>
+                                    </span>
+                                    <span class="ml20">
+                                        <i class="fa fa-comments fs-16"></i>
+                                        <a href="javascript:void(0)" class="num fc-grey">@Model.TopOneArticle.CommentsCount</a>
+                                    </span>
+                                </div>
+                            </aside>
+                        </section>
+                    }
+                </article>
+            </div>
+        </div>
+        <div class="col-other">
+            <div class="inner">
+                <div class="other-item" id="categoryandsearch">
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=480 style="margin:-10px -10px -15px -10px;" src="//music.163.com/outchain/player?type=0&id=5427177969&auto=1&height=430"></iframe>
+                    @*<div class="search">
+                            <label class="search-wrap">
+                                <input type="text" id="searchtxt" placeholder="输入关键字搜索" />
+                                <span class="search-icon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </label>
+                            <ul class="search-result"></ul>
+                        </div>
+                        <div id="tagscloud">
+                            @foreach (var item in Model.Channels)
+                            {
+                                Random random = new Random();
+                                string r = random.Next(1, 6).ToString();
+                                <a href="#" class="tagc@(r)">@item.Name</a>
+                            }
+                        </div>*@
+                    @*<ul class="category mt20" id="category">
+                            <li data-index="0" class="slider"></li>
+                            <li data-index="1"><a href="/Blog/Article">全部文章</a></li>
+                            <li data-index="2"><a href="/Blog/Article/1/">个人日记</a></li>
+                            <li data-index="3"><a href="/Blog/Article/2/">HTML5&amp;CSS3</a></li>
+                            <li data-index="4"><a href="/Blog/Article/3/">JavaScript</a></li>
+                            <li data-index="5"><a href="/Blog/Article/4/">ASP.NET MVC</a></li>
+                            <li data-index="6"><a href="/Blog/Article/5/">其它</a></li>
+                        </ul>*@
+
+
+
+                </div>
+                <!--右边悬浮 平板或手机设备显示-->
+                <div class="category-toggle"><i class="layui-icon">&#xe603;</i></div>
+                <div class="article-category">
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=480 style="margin:-10px -10px -15px -10px;" src="//music.163.com/outchain/player?type=0&id=5427177969&auto=0&height=430"></iframe>
+                    @*<div class="article-category-title">分类导航</div>
+                        @foreach (var item in Model.Channels)
+                        {
+                            <a href="#">@item.Name</a>
+                        }
+                        <div class="f-cb"></div>*@
+
+                </div>
+
+                <!--遮罩-->
+                <div class="blog-mask animated layui-hide"></div>
+                <div class="other-item">
+                    <h5 class="other-item-title">热门文章</h5>
+                    <div class="inner">
+                        <ul class="hot-list-article">
+                            @foreach (var item in Model.HotArticles)
+                            {
+                                <li><a asp-action="Detail" asp-controller="Article" asp-route-id="@item.Id">@item.Title</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="other-item">
+                    <h5 class="other-item-title">置顶推荐</h5>
+                    <div class="inner">
+                        <ul class="hot-list-article">
+                            @foreach (var item in Model.TopArticles)
+                            {
+                                <li> <a asp-action="Detail" asp-controller="Article" asp-route-id="@item.Id">@item.Title</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="other-item">
+                    <h5 class="other-item-title">最近访客</h5>
+                    <div class="inner">
+                        <dl class="vistor">
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/72388EA977643E8F97111222675720B1/100"><cite>Anonymous</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/342F777E313DDF5CCD6E3E707BB0770B/100"><cite>Dekstra</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/EA5D00A72C0C43ECD8FC481BD274DEEC/100"><cite>惜i</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/EF18CEC98150D2442183AA30F05AAD7B/100"><cite>↙Aㄨ计划 ◆莪↘</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/3D8D91AD2BAFD36F5AC494DA51E270E6/100"><cite>.</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/B745A110DAB712A0E6C5D0B633E905D3/100"><cite>Lambert.</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/E9BA3A2499EC068B7917B9EF45C4D13C/100"><cite>64ღ</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/09F92966169272DD7DD9999E709A0204/100"><cite>doBoor</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/59991D53192643A1A651383847332EB6/100"><cite>毛毛小妖</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/FF34F311DDC43E2AF63BE897BCA24F05/100"><cite>NULL</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/59AA25A7627284AE62C8E6EBDC6FE417/100"><cite>吓一跳</cite></a></dd>
+                            <dd><a href="javasript:;"><img src="https://thirdqq.qlogo.cn/qqapp/101465933/28B021E0F5AF0A4B9B781A24329FE897/100"><cite>如初</cite></a></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <link rel="stylesheet" href="~/css/blog.css" />
+    @*<link href="~/lib/biaoqianyun/css/zzsc.css" rel="stylesheet" type="text/css" />*@
+}
+
+@section loadscripts{
+    <script src="~/js/yss/article.js"></script>
+    <script>
+        layui.use(['jquery','flow'], function () {
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            var flow = layui.flow;
+            flow.load({
+                elem: '#LAY_bloglist' //指定列表容器
+                , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    $.get('@Url.Content("~/Article/List?page=")' + page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            var html = '<section class="article-item zoomIn article"><h5 class="title"><span class="fc-blue">【精华】</span><a href="@Url.Content("~/Article/Detail/")' + item.id + '">' + item.title + '</a></h5><div class="time"><span class="day">'+item.day+'</span><span class="month fs-18">'+item.month+'<span class="fs-14">月</span></span><span class="year fs-18 ml10">'+item.year+'</span></div><div class="content"><a href="@Url.Content("~/Article/Detail/")' + item.id + '" class="cover img-light"><img src="https://todo369.top/fileserver'+item.cover+'"></a>' + item.abstract +'</div><div class="read-more"><a href="@Url.Content("~/Article/Detail/")' + item.id + '" class="fc-black f-fwb">继续阅读</a></div><aside class="f-oh footer"><div class="f-fl tags"><span class="fa fa-tags fs-16"></span><a class="tag">'+item.channelName+'</a></div><div class="f-fr"><span class="read"><i class="fa fa-eye fs-16"></i> <i class="num"> '+item.supportCount+'</i></span><span class="ml20"><i class="fa fa-comments fs-16"></i> <a href="javascript:void(0)" class="num fc-grey"> '+item.commentsCount+'</a></span></div></aside></section>';
+                            lis.push(html);
+                        });
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.count);
+                    });
+                }
+            });
+        });
+    </script>
+
+}
+@section endscripts{
+    @*<script src="~/lib/biaoqianyun/js/zzsc.js" type="text/javascript"></script>
+        <script>
+            Init();
+        </script>*@
+}

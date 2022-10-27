@@ -1,0 +1,51 @@
+﻿@model UserIndexModel
+@{
+    ViewData["Title"] = "我的邮箱";
+}
+
+<section id="content-wrap" class="site-page">
+    <div class="row">
+        <div class="col-twelve">
+
+            <div class="respond">
+
+                <h3>我的邮箱（@Model.EmailStatus）</h3>
+                <form asp-action="Info" asp-controller="User" id="infoForm" method="post">
+                    <fieldset>
+
+                        <div class="form-field">
+                            <input asp-for="Name" type="text" class="full-width" placeholder="你的 昵称" disabled>
+                        </div>
+                        <span><i class="fa fa-bell"></i> 如果你在邮箱已激活的情况下，变更了邮箱，需重新验证邮箱</span>
+                        <div class="form-field">
+                            <input asp-for="Email" type="text" class="full-width" placeholder="你的 邮箱">
+                            <p id="tipEmail" style="color:red;" class="hide">请填写正确的邮箱</p>
+                        </div>
+
+                        <button type="button" class="submit button-primary">提交</button>
+
+                    </fieldset>
+                </form> <!-- Form End -->
+
+            </div> <!-- Respond End -->
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $("button").click(function () {
+            var email = $("#Email").val();
+            if (email == '' || email == null) {
+                $("#tipEmail").show();
+                return;
+            }
+            var reg = /^\w+([-+.]\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            if (!reg.test(email)) {
+                $("#tipEmail").show();
+                return;
+            }
+            $("#infoForm").submit();
+        });
+    </script>
+}

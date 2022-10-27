@@ -1,0 +1,224 @@
+﻿
+@{
+    ViewData["Title"] = "系统日志";
+}
+@await Component.InvokeAsync("Channel")
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>系统日志</legend>
+            </fieldset>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年10月27日</h3>
+                        *因服务器配置低，关闭ElasticSearch搜索引擎优化，关闭nginx代理服务<br />
+                        全站统一域名，加入SSL安全认证<br />
+                        优化369博客部分功能<br />
+                        解决跨域问题<br />
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年9月15日</h3>
+                        标签模块、今日推荐、本周热议使用部分视图组件重写，去除冗余代码，提高复用<br />
+                        优化后台管理系统，添加编辑文章置顶功能以及搜索功能<br />
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年9月3日</h3>
+                        废弃域名：todo369.club<br />
+                        全站统一域名：todo369.top<br />
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年8月26日</h3>
+                        todo369.club域名即将到期；<br />
+                        新增todo369.top、www.todo369.top域名，加入安全认证；<br />
+                        目前这6个网址都可以访问：<br />
+                        <ul>
+                            <li>http://todo369.club/</li>
+                            <li>http://www.todo369.club/</li>
+                            <li>http://todo369.top/</li>
+                            <li>http://www.todo369.top/</li>
+                            <li>https://todo369.top/</li>
+                            <li>https://www.todo369.top/</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年8月21日</h3>
+                        优化后台用户、角色、权限功能<br />
+                        新增配置项编辑功能<br />
+                        优化保存文章功能
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年6月17日</h3>
+                        开发文件服务<br />
+                        实现跨域上传文件<br />
+                        优化歌单和歌曲管理
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年5月14日</h3>
+                        新增加密、解密功能<br />
+                        新增正则表达式功能<br />
+                        新增单位换算功能
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020年2月6日</h3>
+                        新增代码格式化功能<br />
+                        新增事件倒计时功能
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年11月15日</h3>
+                        优化默认删除时间为空<br />
+                        开发工具模块
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年10月30日</h3>
+                        删除Todo369首页的音乐播放器功能<br />
+                        更换CDNN<br />
+                        开发随机用户名功能<br />
+                        调整“早教启蒙”音乐播放器音量大小按钮
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年10月23日</h3>
+                        “早教启蒙”网站，更换音乐播放器，兼容性更好，更炫酷<br />
+                        后台管理系统开发了以下功能：
+                        <ul>
+                            <li>歌单管理，新增歌单，上传歌单封面</li>
+                            <li>导入歌曲功能</li>
+                            <li>开发“早教启蒙”微语功能</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年10月6日</h3>
+                        开发“早教启蒙”网站
+                        <ul>
+                            <li>新增歌单详情页</li>
+                            <li>开发歌曲歌单服务</li>
+                            <li>开发歌单页面</li>
+                            <li>调整响应式布局</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年8月3日</h3>
+                        <p>对系统做了以下更改：</p>
+                        <ul>
+                            <li>优化首页音乐播放器</li>
+                            <li>新增“今日推荐”功能</li>
+                            <li>后台管理系统开发“一键索引”功能</li>
+                            <li>整理框架</li>
+                        </ul>
+                        新增Todo369博客网站
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年7月26日</h3>
+                        <p>
+                            优化黄帝内经模块，调整顺序排列<br />
+                            优化错误页<br />
+                            调整时间格式<br />
+                            添加评论数量
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年7月18日</h3>
+                        <p>
+                            Todo369首页新增标签云模块<br />
+                            调整首页布局<br />
+                            首页新增音乐播放器
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年6月29日</h3>
+                        <p>
+                            后台管理系统新增字典管理、配置管理功能<br />
+                            优化评论功能，评论添加验证码<br />
+                            优化后台管理系统，添加文章功能
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年6月21日</h3>
+                        <p>
+                            新增留言、搜索功能（ElasticSearch搜索引擎优化）<br>
+                            新增随笔模块
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年5月2日</h3>
+                        <p>对系统做了以下更改：</p>
+                        <ul>
+                            <li>优化分页，滚动分页更丝滑</li>
+                            <li>新增评论过滤词功能</li>
+                            <li>优化频道下拉框功能</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019年3月15日</h3>
+                        <p>
+                            Toto369网站上线啦！
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+        </div>
+    </div>
+</div>
+

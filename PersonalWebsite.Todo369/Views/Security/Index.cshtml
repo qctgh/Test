@@ -1,0 +1,98 @@
+﻿@model SecurityIndexModel
+@{
+    Layout = "_LayoutPopups";
+}
+
+<form asp-action="Index" method="post">
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            <li class="@(Model.Current=="aes"?"layui-this":"")">AES加密/解密</li>
+            <li class="@(Model.Current=="base64"?"layui-this":"")">Base64编码/解码</li>
+            <li class="@(Model.Current=="des"?"layui-this":"")">DES加密/解密</li>
+            <li class="@(Model.Current=="md5"?"layui-this":"")">MD5加密</li>
+            <li class="@(Model.Current=="rsa"?"layui-this":"")">RSA加密/解密</li>
+            <li class="@(Model.Current=="url"?"layui-this":"")">URL加密</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item @(Model.Current=="aes"?"layui-show":"")">
+                <div class="layui-row">
+                    <textarea asp-for="AESText" style="width:48%;height:320px;" placeholder="请输入需要加密或解密的AES字符串"></textarea>
+                    <textarea style="width:48%;height:320px;" placeholder="加密或解密后的字符串">@(Model?.AESResult)</textarea>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md3">
+                        <input asp-for="AESKey" type="text" class="layui-input" placeholder="key" style="width:98%;" />
+                    </div>
+                    <div class="layui-col-md9">
+                        <button class="layui-btn" asp-route-id="aes" asp-route-type="encrypt">加密</button>
+                        <button class="layui-btn" asp-route-id="aes" asp-route-type="decrypt">解密</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item @(Model.Current=="base64"?"layui-show":"") ">
+                <div class="layui-row">
+                    <textarea asp-for="Base64Text" style="width:48%;height:320px;" placeholder="请输入Base64编码字符串"></textarea>
+                    <textarea style="width:48%;height:320px;" placeholder="加密或解密后的Base64编码字符串">@(Model?.Base64Result)</textarea>
+                </div>
+                <div>
+                    <button class="layui-btn" asp-route-id="base64" asp-route-type="encrypt">加密</button>
+                    <button class="layui-btn" asp-route-id="base64" asp-route-type="decrypt">解密</button>
+                </div>
+            </div>
+            <div class="layui-tab-item @(Model.Current=="des"?"layui-show":"")">
+                <div class="layui-row">
+                    <textarea asp-for="DESText" style="width:48%;height:320px;" placeholder="请输入需要加密的字符串"></textarea>
+                    <textarea style="width:48%;height:320px;">@(Model?.DESResult)</textarea>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md3">
+                        <input asp-for="DESKey" type="text" class="layui-input" placeholder="key" style="width:98%;" />
+                    </div>
+                    <div class="layui-col-md9">
+                        <button class="layui-btn" asp-route-id="des" asp-route-type="encrypt">加密</button>
+                        <button class="layui-btn" asp-route-id="des" asp-route-type="decrypt">解密</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item @(Model.Current=="md5"?"layui-show":"")">
+                <div class="layui-row">
+                    <textarea asp-for="MD5Text" style="width:48%;height:320px;" placeholder="请输入需要加密的字符串"></textarea>
+                    <textarea style="width:48%;height:320px;" placeholder="解密后的字符串">@(Model?.MD5Result)</textarea>
+                </div>
+                <div class="layui-row">
+                    <button class="layui-btn" asp-route-id="md5" asp-route-type="encrypt">加密</button>
+                </div>
+            </div>
+            <div class="layui-tab-item @(Model.Current=="rsa"?"layui-show":"")">
+                <div class="layui-row">
+                    <textarea asp-for="RSAText" style="width:48%;height:320px;" placeholder="请输入需要加密的字符串"></textarea>
+                    <textarea style="width:48%;height:320px;">@(Model?.RSAResult)</textarea>
+                </div>
+                <div class="layui-row">
+                    <button class="layui-btn" asp-route-id="rsa" asp-route-type="encrypt">加密</button>
+                    <button class="layui-btn" asp-route-id="rsa" asp-route-type="decrypt">解密</button>
+                </div>
+            </div>
+            <div class="layui-tab-item @(Model.Current=="url"?"layui-show":"")">
+                <div class="layui-row">
+                    <textarea asp-for="URLText" style="width:48%;height:320px;" placeholder="请输入需要加密的URL"></textarea>
+                    <textarea style="width:48%;height:320px;" placeholder="加密后的URL">@(Model?.URLResult)</textarea>
+                </div>
+                <div class="layui-row">
+                    <button class="layui-btn" asp-route-id="url" asp-route-type="encrypt">加密</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        layui.use('element', function () {
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        });
+    </script>
+}

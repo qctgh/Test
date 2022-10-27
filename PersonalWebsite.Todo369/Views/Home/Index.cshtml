@@ -1,0 +1,160 @@
+﻿@model HomeIndexModel
+@{
+    ViewData["Title"] = "首页";
+}
+
+@await Component.InvokeAsync("Channel")
+
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="fly-panel">
+                <div class="fly-panel-title fly-filter">
+                    <a>置顶</a>
+                </div>
+                <ul class="fly-list">
+                    @foreach (var item in Model.TopArticles)
+                    {
+                        <li>
+                            <a href="#" class="fly-avatar">
+                                <img src="/res/images/avatar/0.jpg" alt="@item.UserName">
+                            </a>
+                            <h2>
+                                <a asp-action="Index" asp-controller="Article" asp-route-id="@item.ChannelCode" class="layui-badge">@item.ChannelName</a>
+                                <a href="/Article/Detail/@item.Id">@item.Title</a>
+                                @*<a href="/Art/@item.StaticPath">@item.Title</a>*@
+                            </h2>
+                            <div class="fly-list-info">
+                                <a href="#" link> <cite>@item.UserName</cite></a>
+                                <span> @item.PublishDate</span>
+                                <span>
+                                    <i class="layui-icon layui-icon-heart"></i> @item.SupportCount
+                                </span>
+                                <span class="fly-list-nums">
+                                    <i class="iconfont icon-pinglun1" title="回答"></i>@item.CommentsCount
+                                </span>
+                            </div>
+                            <div class="fly-list-badge">
+                                <!--存放置顶或者精贴-->
+                                <span class="layui-badge layui-bg-red">精帖</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="fly-panel" style="margin-bottom: 0;">
+                <div class="fly-panel-title fly-filter">
+                    <a href="" class="layui-this">综合</a>
+                </div>
+
+                <ul class="fly-list" id="rowArts"></ul>
+                <br />
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+
+            <div class="fly-panel fly-channel">
+                <div class="fly-panel-title">
+                    标签云
+                </div>
+                <div class="fly-panel-main">
+                    <style>
+                        #tag-cloud {
+                            width: 300px;
+                            height: 300px;
+                            margin: 0 auto;
+                        }
+                    </style>
+                    <div id='tag-cloud'></div>
+                    <script src="~/lib/biaoqianyun/js/jquery-2.1.1.min.js"></script>
+                    <script src="~/lib/biaoqianyun/js/jquery.svg3dtagcloud.min.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            var entries = @Html.Raw(Model.ChannelYun);
+
+                            var settings = {
+
+                                entries: entries,
+                                width: 300,
+                                height: 300,
+                                radius: '65%',
+                                radiusMin: 75,
+                                bgDraw: true,
+                                bgColor: '#fff',
+                                opacityOver: 1.00,
+                                opacityOut: 0.05,
+                                opacitySpeed: 6,
+                                fov: 800,
+                                speed: 0.5,
+                                fontFamily: 'Oswald, Arial, sans-serif',
+                                fontSize: '15',
+                                fontColor: '#333',
+                                fontWeight: 'normal',//bold
+                                fontStyle: 'normal',//italic
+                                fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+                                fontToUpperCase: false
+
+                            };
+
+                            //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+                            $('#tag-cloud').svg3DTagCloud(settings);
+
+                        });
+
+                    </script>
+                </div>
+            </div>
+
+
+            <!--Ad/Ours-->
+            <div class="fly-panel" style="padding: 15px 0; text-align: center;">
+                @*<img src="//cdn.layui.com/upload/2017_8/168_1501894831075_19619.jpg" style="max-width: 100%;" alt="layui">*@
+                <img src="~/images/wxgzh.png" style="width:300px;height:150px;margin-bottom:10px;" alt="最佳你们" />
+                <p style="position: relative; color: #666;">微信扫码关注 最佳你们 公众号</p>
+            </div>
+
+            <div class="fly-panel fly-link">
+                <h3 class="fly-panel-title">友情链接</h3>
+                <dl class="fly-panel-main">
+                    <dd><a href="https://wxkdy666.com/" target="_blank">看电影666</a></dd>
+                    <dd><a href="https://www.xmlvhy.com/" target="_blank">AI码真香</a></dd>
+                    <dd><a href="#" class="fly-link">申请友链</a></dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        layui.use(['jquery','flow'], function () {
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            var flow = layui.flow;
+            flow.load({
+                elem: '#rowArts' //指定列表容器
+                , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    $.get('@Url.Content("~/Home/ArticleList?page=")' + page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            var html = '<li><a href="#"class="fly-avatar"><img src="/res/images/avatar/0.jpg"alt="' + item.userName + '"></a><h2><a href="/Article/Index/' + item.channelCode + '" class="layui-badge">' + item.channelName + '</a><a href="/Article/Detail/' + item.id + '">' + item.title + '</a></h2><div class="fly-list-info"><a href="#"link><cite>' + item.userName + '</cite></a><span>' + item.publishDate + '</span><span><i class="layui-icon layui-icon-heart"></i> ' + item.supportCount + '</span><span class="fly-list-nums"><i class="iconfont icon-pinglun1"title="回答"></i> ' + item.commentsCount+'</span></div><div class="fly-list-badge"><!--存放置顶或者精贴--></div></li>';
+                            lis.push(html);
+                        });
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.count);
+                    });
+                }
+            });
+        });
+    </script>
+}

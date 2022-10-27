@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "后台用户管理";
+}
+
+@section toolbar{
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="poster" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="content" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layuiadmin-btn-forum-list" lay-submit="" lay-filter="LAY-app-forumlist-search">
+                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+            </button>
+        </div>
+    </div>
+}
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加后台用户</button>
+    </div>
+</script>
+<table class="layui-hide" id="myTable" lay-filter="myTable" lay-even=""></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="addRole">分配角色</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+@section scripts{
+
+    <script>
+        layui.use(['table','layer'], function () {
+            var table = layui.table
+                , layer = layui.layer;
+            //第一个实例
+            table.render({
+                elem: '#myTable'
+                , url: '@Url.Content("~/AdminUser/List")' //数据接口
+                , method: 'post'
+                , page: true //开启分页
+                , limit: 10
+                , cellMinWidth: 150
+                , toolbar: '#toolbarDemo'
+                , title: '数据列表'
+                , cols: [[ //表头
+                      { field: 'id', title: 'ID', sort: true }
+                    , { field: 'name', title: '用户名', sort: true }
+                    , { field: 'phoneNum', title: '手机号', sort: true }
+                    , { field: 'email', title: '邮箱', sort: true }
+                    , { field: 'loginErrorTimes', title: '错误次数', sort: true }
+                    , { field: 'lastLoginErrorDateTime', title: '最后一次错误时间', sort: true }
+                    , { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                ]]
+            });
+            //头工具栏事件
+            table.on('toolbar(myTable)', function (obj) {
+                console.log(obj);
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'add':
+                        location.href = '@Url.Content("~/AdminUser/Add")';
+                        break;
+                };
+            });
+            //监听行工具事件
+            table.on('tool(myTable)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        fly.json('/Admin/Home/RequestArticles', { 'action': 'delete', 'data': JSON.stringify(data) }, function (res) {
+                            layer.msg(res.msg);
+                        });
+                        obj.del();
+                        layer.close(index);
+                    });
+                } else if (obj.event === 'edit') {
+                    layer.prompt({
+                        formType: 2
+                        , value: data.email
+                    }, function (value, index) {
+                        obj.update({
+                            email: value
+                        });
+                        layer.close(index);
+                    });
+                } else if (obj.event === "addRole") {
+                    layer.open({
+                        type:2
+                        ,title: '添加权限'
+                        ,area: ['800px', '600px']
+                        ,content: ['@Url.Content($"~/AdminUser/AddRole?adminUserId=")'+data.id]
+                    });
+                }
+            });
+
+        });
+    </script>
+}

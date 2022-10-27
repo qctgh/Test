@@ -1,0 +1,62 @@
+﻿@model SearchIndexModel
+@{
+    ViewData["Title"] = $"Todo369-{Html.Raw(Model.KeyWord)}";
+}
+
+
+@await Component.InvokeAsync("Channel")
+
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="fly-panel" style="margin-bottom: 0;">
+                <div class="fly-panel-title fly-filter">
+                    <a href="" class="layui-this">搜索内容：@Html.Raw(Model.KeyWord)</a>
+                </div>
+                <ul class="fly-list" id="rowArts"></ul>
+                <br />
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        layui.config({
+            base: '@Url.Content("~/res/mods/")'
+        }).use(['fly','flow'], function () {
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            var flow = layui.flow;
+
+            var kw = '@Html.Raw(Model.KeyWord)';
+
+            flow.load({
+                elem: '#rowArts' //指定列表容器
+                , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    $.get('@Url.Content("~/Search/Search?kw=")' + kw + '&page=' + page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            var html = '<li><a href="#"class="fly-avatar"><img src="/res/images/avatar/0.jpg"alt="'+item.userName+'"></a><h2><a class="layui-badge">'+item.channelName+'</a><a href="/Article/Detail/'+item.id+'">'+item.title+'</a></h2><div class="fly-list-info"><a href="#"link><cite>'+item.userName+'</cite></a><span>'+item.publishDate+'</span><span><i class="iconfont icon-zan"></i> '+item.supportCount+'</span><span class="fly-list-nums"><i class="iconfont icon-pinglun1"title="回答"></i></span></div><div class="fly-list-badge"><!--存放置顶或者精贴--></div></li>';
+                            lis.push(html);
+                        });
+
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //count为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.count);
+                    });
+                }
+            });
+        });
+    </script>
+}

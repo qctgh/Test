@@ -1,0 +1,17 @@
+﻿@model PersonalWebsite.DTO.ArticleDTO[]
+<!--List_Hot-->
+<dl class="fly-panel fly-list-one">
+    <dt class="fly-panel-title">本周热议</dt>
+    @if (Model == null)
+    {
+        <dd class="fly-none">没有相关数据</dd>
+    }
+    @foreach (var item in Model)
+    {
+        <dd>
+            <a href="/Article/Detail/@item.Id">@item.Title</a>
+            @*<a href="/Art/@item.StaticPath">@item.Title</a>*@
+            <span><i class="iconfont icon-pinglun1"></i> @item.CommentsCount</span>
+        </dd>
+    }
+</dl>

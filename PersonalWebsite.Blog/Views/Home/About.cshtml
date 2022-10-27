@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "关于";
+}
+<div class="doc-container animated fadeIn" id="doc-container">
+    <div class="container-fixed">
+        <!--导航-->
+        <blockquote class="layui-elem-quote sitemap">
+            <i class="layui-icon"></i>
+            <span class="layui-breadcrumb" lay-separator=">" style="visibility: visible;">
+                <a href="~/">首页</a><span lay-separator="">&gt;</span>
+                <a><cite>关于</cite></a>
+            </span>
+        </blockquote>
+        <!--中间内容-->
+        <div class="container-inner">
+            <article>
+                <!--关于我-->
+                <section>
+                    <h1>关于我</h1>
+                    <div class="message-tips">
+                        @*<h3>概况</h3>
+                        <ul>
+                            <li>
+                                <p>
+                                    在校期间，图特工作室跟老师做了不少项目。（这里主要想描述大二认识了启蒙老师龚老师，走上了一条不归路，在图特工作室做了不少新项目，有了项目经验，至此对老师非常感激）
+                                    18年毕业后就职于北京一家电子科技公司，……。19年初，一个偶然的机会，来到了某个特殊的部门，十分有幸能为国家政府机关单位开发系统，也满足了我小时候为祖国出一份力的梦想，自此沉迷技术学习、撸码，无法自拔......（哈哈，尽瞎折腾^-^）
+                                </p>
+                            </li>
+                        </ul>*@
+                        <h3>联系</h3>
+                        <ul>
+                            <li>
+                                <p>Q&nbsp;&nbsp;Q ：<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=154878690&amp;site=qq&amp;menu=yes" target="_blank"> 154878690</a></p>
+                                <p>
+                                    邮&nbsp;箱 ：<a href="mailto:qctvip@vip.163.com" target="_blank">qctvip@vip.163.com</a>
+                                </p>
+                                <p>Gitee ：<a href="https://gitee.com/qiect" target="_blank">https://gitee.com/qiect</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--关于本站-->
+                <section>
+                    <h1>关于本站</h1>
+                    <div class="message-tips">
+                        <h3>说明</h3>
+                        <ul>
+                            <li>
+                                <p>
+                                    本网站建于2020年02月02日，主要为了记录个人学习内容、工作的经验、以及技术、资源、趣事分享。@*前端参考&nbsp;<a href="https://www.yanshisan.cn" target="_blank">燕十三</a>&nbsp;提供的开源模板进行修改开发，效果还可以<strong style="font-size: 10px;">自我感觉</strong>....（自恋了，哈哈 mmp......^-^）*@
+                                </p>
+                            </li>
+                        </ul>
+                        <h3>结构</h3>
+                        <ul>
+                            <li>
+                                <p>前&nbsp;&nbsp;&nbsp;端 ：<code>LayUI等各种插件</code></p>
+                                <p>
+                                    后&nbsp;&nbsp;&nbsp;端 ：<code>Asp.Net Core2.2 + EF + ElasticSearch + Redis + SqlServer</code>
+                                </p>
+                                <p>服务器 ：<code>Windows Server + Nginx</code></p>
+                                <p>本站部署腾讯云提供的ECS服务器，静态资源的存储采用腾讯云存储以及七牛云云存储。</p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--关于版权-->
+                <section>
+                    <h1>关于版权</h1>
+                    <div class="message-tips">
+                        <h3>说明</h3>
+                        <ul>
+                            <li>
+                                <p>本站所有转载的文章，一般都会在文末处注明原文出处。</p>
+                                <p>
+                                    本站所有转载的文章以及分享的资源皆来源于互联网，若因此对您造成侵权，烦请告知&nbsp;<a href="mailto:qctvip@vip.163.com" target="_blank">qctvip@vip.163.com</a>，收到消息确认后，我会在24小时内删除相关内容。
+                                </p>
+                                <p>
+                                    本站采用「 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" target="_blank">署名-非商业性使用4.0 国际 (CC BY-NC 4.0)</a>」创作共享协议。只要在使用时注明出处，那么您可以可以对本站所有原创内容进行转载、节选、二次创作，但是您不得对其用于商业目的。
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--免责申明-->
+                <section>
+                    <h1>关于免责</h1>
+                    <div class="message-tips">
+                        <h3>说明</h3>
+                        <ul>
+                            <li>
+                                <p>1、本站发布的所有文章仅代表个人观点，和任何组织或个人无关。</p>
+                                <p>2、本站注册用户邮箱仅作消息通知使用，不对外使用。</p>
+                                <p>3、本网站属于个人非赢利性质的网站，所有转载的文章都以遵循原作者的版权声明注明了文章来源。</p>
+                                <p>4、如果原文没有版权声明，按照目前互联网开放的原则，本网站将在不通知作者的情况下转载文章。</p>
+                                <p>5、如果原文明确注明“禁止转载”，本网站将不会转载。</p>
+                                <p>6、如果本网站转载的文章不符合作者的版权声明或者作者不想让本网站转载您的文章，请邮件告知，本站将会在第一时间删除相关信息！</p>
+                                <p>7、本网站转载文章仅为留作备份和知识点分享的目的。</p>
+                                <p>8、本网站将尽力确保所提供信息的准确性及可靠性，但不保证信息的正确性和完整性，且不对因信息的不正确或遗漏导致的任何损失或损害承担相关责任。</p>
+                                <p>
+                                    9、本网站所发布、转载的文章，其版权均归原作者所有。如其他自媒体、网站或个人从本网站下载使用，请在转载有关文章时务必尊重该文章的著作权，保留本网站注明的“原文来源”或者自行去原文处复制版权声明，并自负版权等法律责任。
+                                </p>
+                                <p>10、本网站的所有原创文章皆可以任意转载，但转载时务必请注明出处。</p>
+                                <p><strong>尊重原创，知识共享</strong></p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--鼓励赞助-->
+                <section>
+                    <h1>鼓励一下</h1>
+                    <div class="message-tips">
+                        <div class="layui-row">
+                            <div class="layui-card">
+                                <div class="layui-col-sm6 layui-col-sm-offset2 layui-col-md4">
+                                    <div class="layui-card-body">
+                                        <img src="~/image/pay/alipay.jpg" />
+                                    </div>
+                                </div>
+                                <div class="layui-col-sm6 layui-col-md4">
+                                    <div class="layui-card-body">
+                                        <img src="~/image/pay/wechatpay.jpg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <link rel="stylesheet" href="~/css/about.css" />
+    <style>
+        .layui-card-body img {
+            width: 250px;
+            height: 270px !important;
+            height: auto;
+            border-radius: 6px;
+            vertical-align: middle;
+            border: 0;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    </style>
+}

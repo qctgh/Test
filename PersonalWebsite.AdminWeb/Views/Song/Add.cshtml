@@ -1,0 +1,100 @@
+﻿@model SongModel
+@{
+    ViewData["Title"] = "添加歌曲";
+    ViewData["BreadCrumb"] = "主页 / 歌曲管理 / 添加歌曲";
+    Layout = "_LayoutPopups";
+}
+@section toolbar{
+    <h3>添加歌曲</h3>
+}
+<form id="form1" class="layui-form" asp-action="Add" asp-controller="Song" method="post" enctype="multipart/form-data">
+    <div class="layui-form-item">
+        <label class="layui-form-label">歌单</label>
+        <div class="layui-input-block">
+            <select asp-for="SongMenuId" asp-items="@ViewBag.SongMenu" lay-verify="required" lay-search="">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">专辑</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Album" lay-verify="required" placeholder="请输入该批次歌曲的专辑" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">歌手</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Artist" lay-verify="required" placeholder="请输入该批次歌曲的歌手" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">专辑封面</label>
+        <div class="layui-input-block">
+            <input class="layui-input" type="text" asp-for="Cover" value="" lay-verify="required" placeholder="请点击上传图片" autocomplete="off" />
+            <div class="layui-upload" style="margin-top:20px;">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">导入的歌曲目录</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Src" lay-verify="required" placeholder="例如：/Music/许嵩/" value="/Music/许嵩/" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择歌曲</label>
+        <div class="layui-input-block">
+            <input type="file" name="files" multiple lay-verify="required" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="*" lay-submit>保存</button>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        layui.use('upload', function () {
+            var $ = layui.jquery
+                , upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: 'https://todo369.top/fileserver/api/Files' //改成您自己的上传接口
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.status > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    $("#Cover").val(res.url);
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+        });
+    </script>
+}
+

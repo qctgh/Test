@@ -1,0 +1,51 @@
+﻿
+@model SongIndexModel
+@{
+    ViewBag.Title = $"{Model.Song.Name}";
+}
+<!-- content
+   ================================================== -->
+<section id="content-wrap" class="blog-single">
+    <div class="row">
+        <div class="col-twelve">
+
+            <article class="format-audio">
+
+                <div class="content-media">
+                    <div class="featured-post-slide">
+
+                        <div class="post-background" style="background-image:url('@Url.Content("~/images/thumbs/single/bg2.jpg")');"></div>
+
+                        <div class="overlay"></div>
+
+                        <div class="post-content">
+                            <ul class="entry-meta">
+                                <li>@Model.Song.Album，</li>
+                                <li>@Model.Song.Artist。</li>
+                            </ul>
+
+                            <h1 class="slide-title">@Model.Song.Name</h1>
+                        </div>
+
+                    </div>
+                    <div class="audio-wrap">
+                        @*autoplay自动播放，loop循环播放*@
+                        <audio id="player2" src="@Url.Content($"~{Model.Song.Mp3}")" autoplay="autoplay" loop="loop" width="100%" height="42" controls="controls"></audio>
+                    </div>
+                </div>
+
+                <hr />
+                <h3>推荐</h3>
+                @foreach (var item in Model.RandomSongs)
+                {
+                    <a asp-action="Index" asp-controller="Song" asp-route-id="@item.Id" rel="next">@item.Name </a>
+                    <br />
+                }
+            </article>
+
+
+        </div> <!-- end col-twelve -->
+    </div> <!-- end row -->
+
+
+</section> <!-- end content -->

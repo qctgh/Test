@@ -1,0 +1,33 @@
+﻿@model List<ChannelModel>
+
+<div class="fly-panel fly-column">
+    <div class="layui-container">
+        <ul class="layui-nav">
+            @foreach (var item in Model)
+            {
+                <li class="layui-nav-item">
+                    @if (item.Channels.Count <= 0)
+                    {
+                        <a href="@Url.Content("~/Article/Index/"+item.Code)">@item.Name</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:;">@item.Name</a>
+                        <dl class="layui-nav-child">
+                            @foreach (var childItem in item.Channels)
+                            {
+                                <dd><a href="@Url.Content("~/Article/Index/"+childItem.Code)">@childItem.Name</a></dd>
+                            }
+                        </dl>
+                    }
+                </li>
+            }
+        </ul>
+
+        <div class="fly-column-right layui-hide-xs">
+            <span class="fly-search"><i class="layui-icon">&#xe615;</i></span>
+            @Html.ActionLink("发表文章", "Add", "Article", null, new { @class = "layui-btn" })
+        </div>
+
+    </div>
+</div>

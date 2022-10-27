@@ -1,0 +1,62 @@
+﻿@model ArticleDetailModel
+@{
+    ViewData["Title"] = Model.Article.Title;
+}
+
+<div class="container container-message container-details">
+    <div class="contar-wrap">
+        <div class="item">
+            <div class="item-box  layer-photos-demo1 layer-photos-demo">
+                <h3>@Model.Article.Title</h3>
+                <h5>发布于：<span>@Model.Article.CreateDateTime</span></h5>
+                <p class="detail-body">
+                    @Model.Article.Content
+                </p>
+                <img src="~/res/static/images/item.png" alt="" layer-index="0">
+                <div class="count layui-clear">
+                    <span class="pull-left">阅读 <em>19999+</em></span>
+                    <span class="pull-right like"><i class="layui-icon layui-icon-praise"></i><em>@Model.Article.SupportCount</em></span>
+                </div>
+            </div>
+        </div>
+        <form id="comment" class="layui-form" method="post">
+            <input type="hidden" name="Id" asp-for="Article.Id" />
+            <div class="layui-form-item layui-form-text">
+                <textarea name="content" class="layui-textarea" style="resize:none" placeholder="写点什么啊" lay-verify="required"></textarea>
+            </div>
+            @*<button id="confirm" class="layui-btn btn-default" style="float:right">确定</button>*@
+            <input id="confirm" type="button" class="layui-btn btn-default" style="float:right;" value="确定" />
+        </form>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        layui.use(['layer','jquery'], function () {
+            var layer = layui.layer
+                , jquery = layui.jquery;
+            var $ = layui.$;
+
+            $("#confirm").click(function () {
+                var formData = $("#comment").serializeArray();
+                $.ajax({
+                    url: "@Url.Content("~/Article/Comment")",
+                    type: "post",
+                    data: formData,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.code == 0) {
+                            //layer.msg(res.msg);
+                            window.location = res.data;
+                        }
+                        else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}

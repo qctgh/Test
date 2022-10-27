@@ -1,0 +1,28 @@
+﻿@model KeyValueEditModel
+@{
+    ViewData["Title"] = "编辑字典";
+}
+@section toolbar{
+    <h3>编辑字典</h3>
+}
+<form id="form1" class="layui-form" asp-action="Edit" asp-controller="KeyValue" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">关键字</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Key" lay-verify="required" autocomplete="off" placeholder="请输入关键字" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">值</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Value" lay-verify="required" autocomplete="off" placeholder="请输入值" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="*" alert lay-submit>保存</button>
+        </div>
+    </div>
+</form>

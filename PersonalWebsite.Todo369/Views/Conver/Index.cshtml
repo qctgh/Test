@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "_LayoutPopups";
+}
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>人民币转换大写</legend>
+</fieldset>
+<blockquote class="layui-elem-quote layui-text">
+    转换方法：输入人民币金额的小写阿拉伯数字，例如1688.99，然后点击“转换为大写”按钮即可得转换成汉字。 在输入数字的时候，可以包含小数点，也可以写成千进制，例如1,688.99（注意是英文逗号，而不是中文逗号）。
+</blockquote>
+
+<form asp-action="Index" class="layui-form layui-form-pane">
+    <div class="layui-form-item">
+        <label class="layui-form-label">小写金额</label>
+        <div class="layui-input-block">
+            <input type="text" name="content" autocomplete="off" placeholder="要转换的金额" class="layui-input" value="@ViewBag.Content">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">大写金额</label>
+        <div class="layui-input-block">
+            <input type="text" name="result" autocomplete="off" placeholder="转换后的金额" class="layui-input" value="@ViewBag.Result">
+        </div>
+    </div>
+    <button class="layui-btn">转换为大写</button>
+</form>

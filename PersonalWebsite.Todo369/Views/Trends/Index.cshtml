@@ -1,0 +1,43 @@
+﻿@model TrendsIndexModel
+@{
+    ViewData["Title"] = "随笔";
+}
+@await Component.InvokeAsync("Channel")
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>随笔</legend>
+            </fieldset>
+            <ul class="layui-timeline">
+
+                @foreach (var item in Model.Articles)
+                {
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis"></i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">@item.PublishDate</h3>
+                            <b>@Html.Raw(item.Title)</b>
+                            <br />
+                            <p style="margin:15px;">
+                                @Html.Raw(item.Content)
+                            </p>
+                        </div>
+                    </li>
+                }
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">过去</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-col-md4">
+            <!--今日推荐-->
+            @await Component.InvokeAsync("RecommendArticle")
+            <!--本周热议-->
+            @await Component.InvokeAsync("HotArticle")
+        </div>
+    </div>
+</div>

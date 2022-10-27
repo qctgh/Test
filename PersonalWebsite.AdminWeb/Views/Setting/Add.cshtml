@@ -1,0 +1,27 @@
+﻿@model SettingAddModel
+@{
+    ViewData["Title"] = "添加配置";
+}
+@section toolbar{
+    <h3>添加配置</h3>
+}
+<form id="form1" class="layui-form" asp-action="Add" asp-controller="Setting" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Name" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">值</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Value" lay-verify="required" autocomplete="off" placeholder="请输入值" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="*" alert lay-submit>保存</button>
+        </div>
+    </div>
+</form>

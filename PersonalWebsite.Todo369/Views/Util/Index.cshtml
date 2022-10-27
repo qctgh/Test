@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "工具";
+}
+
+<div class="fly-panel fly-column">
+    <div class="layui-container">
+        <div class="layui-row">
+            <ul class="layui-nav" id="util-nav">
+                <li class="layui-nav-item layui-this">
+                    <a asp-action="Index" asp-controller="Useful"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-app"></i><cite>常用功能</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="Format" asp-route-id="html"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-fonts-clear"></i><cite>代码格式化</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="FrontTool"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-set-fill"></i><cite>前端工具</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="Conver"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-rmb"></i><cite>单位换算</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="Regex"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-list"></i><cite>正则表达式</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="Security" asp-route-id="aes"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-vercode"></i><cite>加密解密</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="Event"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-senior"></i><cite>事件倒计时</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-action="Index" asp-controller="List"></a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-table"></i><cite>常用参考表</cite></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@*<iframe id="content" src="@Url.Action("Index","Useful")" frameborder="0" onload="setIframeHeight(this)" style="width:100%;"></iframe>*@
+
+<div class="layui-container">
+    <iframe src="@Url.Action("Index","Useful")" frameborder="0" scrolling="no" id="content" onload="this.height=600" width="100%"></iframe>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        function reinitIframe() {
+            var iframe = document.getElementById("content");
+            try {
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                var height = Math.max(bHeight, dHeight);
+                iframe.height = height;
+                console.log(height);
+            } catch (ex) { }
+        }
+        window.setInterval("reinitIframe()", 300);
+    </script>
+    @*<script>
+            //ifreame高度自适应
+            function setIframeHeight(iframe) {
+                if (iframe) {
+                    var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                    if (iframeWin.document.body) {
+                        iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                    }
+                }
+            };
+
+            window.onload = function () {
+                setIframeHeight(document.getElementById('content'));
+            };
+        </script>*@
+}
+

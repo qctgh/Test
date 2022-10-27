@@ -1,0 +1,118 @@
+﻿@model MessageIndexModel
+@{
+    ViewBag.Title = "留言";
+}
+
+
+<div class="comments-wrap">
+    <div id="comments" class="row">
+        <div class="col-full">
+            <h3>@Model.Count 条留言，<a style="color:#000;" href="#respond">点我留言</a></h3>
+            <!-- commentlist -->
+            <ol class="commentlist">
+                @foreach (var item in Model.Messages)
+                {
+                    <li class="thread-alt depth-1">
+                        <div class="avatar">
+                            <img width="50" height="50" class="avatar" src="@item.UserAvatar" alt="">
+                        </div>
+                        <div class="comment-content">
+                            <div class="comment-info">
+                                <cite>@item.UserName</cite>
+
+                                <div class="comment-meta">
+                                    <time class="comment-time" datetime="@item.CommentDate">@item.CommentDate</time>
+                                    <span class="sep">/</span><a class="reply" href="#respond" mid="@item.Id">回复</a>
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                <p>
+                                    @Html.Raw(item.Content)
+                                </p>
+                            </div>
+                        </div>
+                        @if (item.Messages != null)
+                        {
+                            <ul class="children">
+                                @foreach (var childItem in item.Messages)
+                                {
+                                    <li class="depth-2">
+                                        <div class="avatar">
+                                            <img width="50" height="50" class="avatar" src="@childItem.UserAvatar" alt="">
+                                        </div>
+                                        <div class="comment-content">
+                                            <div class="comment-info">
+                                                <cite>@childItem.UserName 回复 @($"@{item.UserName}")</cite>
+                                                <div class="comment-meta">
+                                                    <time class="comment-time" datetime="@childItem.CommentDate">@childItem.CommentDate</time>
+                                                    @*<span class="sep">/</span><a class="reply" href="#">Reply</a>*@
+                                                </div>
+                                            </div>
+                                            <div class="comment-text">
+                                                <p>
+                                                    @Html.Raw(childItem.Content)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+
+                @Html.Raw(Model.Page)
+
+            </ol> <!-- Commentlist End -->
+            <!-- respond -->
+            <div class="respond" id="respond">
+
+                <h3>留言</h3>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <span>登录后即可留言…</span>
+                }
+                <form asp-action="Add" asp-controller="Message" method="post">
+                    <fieldset>
+                        @*<div class="form-field">
+                                <input name="cQQ" type="text" id="cQQ" class="full-width" placeholder="你的 QQ" value="">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cName" type="text" id="cName" class="full-width" placeholder="你的 昵称" value="">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cEmail" type="text" id="cEmail" class="full-width" placeholder="你的 邮箱" value="">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cWebsite" type="text" id="cWebsite" class="full-width" placeholder="你的 网址" value="">
+                            </div>*@
+                        <input type="hidden" name="pid" id="rMId" />
+                        <div class="message form-field">
+                            <textarea name="message" id="message" class="full-width" placeholder="你的 留言"></textarea>
+                        </div>
+
+                        <button type="submit" class="submit button-primary">提交</button>
+
+                    </fieldset>
+                </form> <!-- Form End -->
+
+            </div> <!-- Respond End -->
+
+        </div> <!-- end col-full -->
+    </div> <!-- end row comments -->
+</div> <!-- end comments-wrap -->
+
+
+@section scripts{
+    <script>
+        $(".reply").click(function () {
+            var mid = this.getAttribute("mid");
+            var userName = this.parentElement.previousElementSibling.innerText;
+            $("#rMId").val(mid);
+            $("#message").attr("placeholder", "回复：" + userName)
+        });
+    </script>
+}

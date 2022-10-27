@@ -1,0 +1,154 @@
+﻿@model HomeIndexModel
+@{
+    ViewData["Title"] = "首页";
+}
+
+<!-- masonry
+    ================================================== -->
+<section id="bricks">
+
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+
+            <div class="brick entry featured-grid animate-this">
+                <div class="entry-content">
+                    <div id="featured-post-slider" class="flexslider">
+                        <ul class="slides">
+
+                            <li>
+                                <div class="featured-post-slide">
+
+                                    <div class="post-background" style="background-image:url('@Url.Content("~/images/thumbs/featured/guqin.jpg")');"></div>
+
+                                    <div class="overlay"></div>
+
+                                    <div class="post-content">
+                                        <ul class="entry-meta">
+                                            <li>中国传统拨弦乐器，</li>
+                                            <li>有三千年以上历史，属于八音中的丝。</li>
+                                        </ul>
+
+                                        <h1 class="slide-title"><a href="single-standard.html" title="">古琴</a></h1>
+                                    </div>
+
+                                </div>
+                            </li> <!-- /slide -->
+
+                            <li>
+                                <div class="featured-post-slide">
+
+                                    <div class="post-background" style="background-image:url('@Url.Content("~/images/thumbs/featured/yangqin.jpg")');"></div>
+
+                                    <div class="overlay"></div>
+
+                                    <div class="post-content">
+                                        <ul class="entry-meta">
+                                            <li>击弦乐器，</li>
+                                            <li>音色明亮，犹如大珠小珠落玉盘般清脆。</li>
+                                        </ul>
+
+                                        <h1 class="slide-title"><a href="single-standard.html" title="">扬琴</a></h1>
+                                    </div>
+
+                                </div>
+                            </li> <!-- /slide -->
+
+                            <li>
+                                <div class="featured-post-slide">
+
+                                    <div class="post-background" style="background-image:url('@Url.Content("~/images/thumbs/featured/gangqin.jpg")');;"></div>
+
+                                    <div class="overlay"></div>
+
+                                    <div class="post-content">
+                                        <ul class="entry-meta">
+                                            <li>键盘乐器，</li>
+                                            <li>有“乐器之王”的美称。</li>
+                                        </ul>
+
+                                        <h1 class="slide-title"><a href="single-standard.html" title="">钢琴</a></h1>
+                                    </div>
+
+                                </div>
+                            </li> <!-- end slide -->
+
+                        </ul> <!-- end slides -->
+                    </div> <!-- end featured-post-slider -->
+                </div> <!-- end entry content -->
+            </div>
+
+
+            <article class="brick entry format-video animate-this">
+
+                <div class="entry-thumb video-image">
+                    <a asp-action="TangPoetry" asp-controller="Song" asp-route-id="@Model.Song.Id">
+                        <img src="~/images/thumbs/single/bg1.jpg" alt="bokeh">
+                    </a>
+                </div>
+
+                <div class="entry-text">
+                    <div class="entry-header">
+
+                        <div class="entry-meta">
+                            <span class="cat-links">
+                                <a href="#">@Model.Song.Album</a>
+                                <a href="#">@Model.Song.Name</a>
+                            </span>
+                            <span class="cat-links">
+                                @DateTime.Now.ToShortDateString()
+                            </span>
+                        </div>
+
+                        <h1 class="entry-title"><a asp-action="Index" asp-controller="Song" asp-route-id="@Model.Song.Id">每天一首诗</a></h1>
+
+                    </div>
+                    <div class="entry-excerpt">
+                        <span>
+                            古诗词是中国文学史上耀眼的明珠，历经千载时光，依旧璀璨夺目。每天一首诗以至简至雅的理念，在浩瀚繁杂的古典诗词中，精选名篇佳作，先秦的奇幻瑰丽，汉唐的风流雅韵，尽收眼底，组成一幅充满生命力的旷古唯美画卷，带读者轻松畅游千古时光，感受纯粹、真挚的古典情怀，在喧嚣而浮躁的生活中让心灵找到一方诗意的栖居之地。
+                        </span>
+                    </div>
+                </div>
+
+            </article> <!-- end article -->
+
+            @foreach (var item in Model.SongMenus)
+            {
+                <article class="brick entry format-standard animate-this">
+
+                    <div class="entry-thumb">
+                        <a asp-action="Detail" asp-controller="SongMenu" asp-route-id="@item.Id" class="thumb-link">
+                            <img src="@item.CoverImgSrc" alt="building">
+                        </a>
+                    </div>
+
+                    <div class="entry-text">
+                        <div class="entry-header">
+
+                            <div class="entry-meta">
+                                <span class="cat-links">
+                                    <a href="@Url.Content("~/SongMenu/Index?pageIndex=1")">群星</a>
+                                    <a href="#">古典</a>
+                                </span>
+                            </div>
+
+                            <h1 class="entry-title"><a href="single-standard.html">@item.Name</a></h1>
+
+                        </div>
+                        <div class="entry-excerpt">
+                            @item.Describe
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+            }
+
+        </div> <!-- end brick-wrapper -->
+
+    </div> <!-- end row -->
+
+
+</section> <!-- end bricks -->

@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>@ViewBag.Title | 早教启蒙</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="~/css/base.css">
+    <link rel="stylesheet" href="~/css/vendor.css">
+    <link rel="stylesheet" href="~/css/main.css">
+
+
+    <!-- script
+    ================================================== -->
+    <script src="~/js/modernizr.js"></script>
+    <script src="~/js/pace.min.js"></script>
+
+    <!-- favicons
+     ================================================== -->
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+
+    @RenderSection("styles", false)
+</head>
+<body id="top">
+    <!-- header
+    ================================================== -->
+    <header class="short-header">
+
+        <div class="gradient-block"></div>
+
+        <div class="row header-content">
+
+            <div class="logo">
+                <a href="~/">早教启蒙</a>
+            </div>
+
+            <nav id="main-nav-wrap">
+                <ul class="main-navigation sf-menu">
+                    <li class="@(ViewBag.Title == "首页" ? "current" : "")"><a href="~/" title="">首页</a></li>
+                    <li class="has-children @(ViewBag.Title == "阶段" ? "current" : "")">
+                        <a href="javascript:;" title="">阶段</a>
+                        <ul class="sub-menu">
+                            @await Component.InvokeAsync("Stage")
+                        </ul>
+                    </li>
+                    <li class="@(ViewBag.Title == "歌单" ? "current" : "")"><a asp-action="Index" asp-controller="SongMenu" title="">歌单</a></li>
+                    <li class="@(ViewBag.Title == "微语" ? "current" : "")"><a asp-action="Index" asp-controller="Whisper" title="">微语</a></li>
+                    <li class="@(ViewBag.Title == "留言" ? "current" : "")"><a asp-action="Index" asp-controller="Message" title="">留言</a></li>
+                    <li class="@(ViewBag.Title == "关于" ? "current" : "")"><a asp-action="About" asp-controller="Home" title="">关于</a></li>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li>
+
+                            <a asp-action="Login" asp-controller="User" asp-route-provider="QQ" asp-route-returnUrl="@this.Context.Request.Path.Value">
+                                <i class="fa fa-qq"></i>
+                                登录
+                            </a>
+
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="has-children">
+                            <a href="javascript:;">
+                                <span style="color:#898989">@User.Identity.Name</span>
+                                <img src="@User.Claims.Where(p => p.Type == "avator").FirstOrDefault()?.Value">
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a asp-action="Index" asp-controller="User">我的邮箱</a>
+                                    <a asp-action="Setting" asp-controller="User">定时提醒</a>
+                                </li>
+                                <li>
+                                    <a style="color:#898989" asp-action="Out" asp-controller="User" asp-route-returnUrl="/">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+            </nav> <!-- end main-nav-wrap -->
+
+            <div class="search-wrap">
+
+                <form asp-action="Index" asp-controller="Search" method="get" class="search-form">
+                    <label>
+                        <span class="hide-content">Search for:</span>
+                        <input type="search" class="search-field" placeholder="输入关键字" value="" name="key" title="Search for:" autocomplete="off">
+                    </label>
+                    <input type="submit" class="search-submit" value="Search">
+                </form>
+
+                <a href="#" id="close-search" class="close-btn">Close</a>
+
+            </div> <!-- end search wrap -->
+
+            <div class="triggers">
+                <a class="search-trigger" href="#"><i class="fa fa-search"></i></a>
+                <a class="menu-toggle" href="#"><span>Menu</span></a>
+            </div> <!-- end triggers -->
+
+        </div>
+
+
+    </header> <!-- end header -->
+    <div style="float:right;margin-right:50px;">
+
+    </div>
+    @RenderBody()
+    <!-- footer
+    ================================================== -->
+    <footer>
+
+        <div class="footer-main">
+
+            <div class="row">
+
+                <div class="col-four tab-full mob-full footer-info">
+
+                    <h4>关于本站</h4>
+
+                    <p>
+                        早教启蒙采用极简设计，方便宝妈们操作，只需要简简单单的点击播放键，就可以让宝宝们有一个优美、和谐、愉悦、轻松的环境啦~
+                    </p>
+
+                </div> <!-- end footer-info -->
+
+                <div class="col-two tab-1-3 mob-1-2 site-links">
+
+                    <h4>阶段</h4>
+                    <ul>
+                        @await Component.InvokeAsync("Stage")
+                    </ul>
+
+                </div> <!-- end site-links -->
+
+                <div class="col-two tab-1-3 mob-1-2 social-links">
+
+                    <h4>友情链接</h4>
+
+                    <ul>
+                        <li><a href="https://todo369.top" target="_blank">Todo369社区</a></li>
+                        <li><a href="https://todo369.top/blog" target="_blank">369BLog</a></li>
+                        <li><a href="https://wxkdy666.com" target="_blank">看电影666</a></li>
+                        <li><a href="#">更多…</a></li>
+                    </ul>
+
+                </div> <!-- end social links -->
+
+                <div class="col-four tab-1-3 mob-full footer-subscribe">
+
+                    <h4>申请链接</h4>
+
+                    <p>申请前请将本站加入友链，提交将在24小时内审核</p>
+
+                    <div class="subscribe-form">
+
+                        <form id="mc-form" class="group" novalidate="true">
+
+                            <input type="email" value="" name="dEmail" class="email" id="mc-email" placeholder="输入链接后请按回车键" required="">
+
+                            <input type="submit" name="subscribe">
+
+                            <label for="mc-email" class="subscribe-message"></label>
+
+                        </form>
+
+                    </div>
+
+                </div> <!-- end subscribe -->
+
+            </div> <!-- end row -->
+
+        </div> <!-- end footer-main -->
+
+        <div class="footer-bottom">
+            <div class="row">
+
+                <div class="col-twelve">
+                    <div class="copyright">
+                        <span>Copyright &copy; 2020.369.京ICP备18054890号-3</span>
+                    </div>
+
+                    <div id="go-top">
+                        <a class="smoothscroll" title="Back to Top" href="#top"><i class="icon icon-arrow-up"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- end footer-bottom -->
+
+    </footer>
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="~/js/jquery-2.1.3.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/jquery.appear.js"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("scripts", false)
+
+</body>
+</html>

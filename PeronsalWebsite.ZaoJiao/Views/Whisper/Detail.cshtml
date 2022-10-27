@@ -1,0 +1,79 @@
+﻿@using PersonalWebsite.DTO
+@model ArticleDTO
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<section id="content-wrap" class="blog-single">
+    <div class="row">
+        <div class="col-twelve">
+
+            <article class="format-standard">
+
+                <div class="primary-content">
+
+                    <h1 class="page-title">@Model.Title</h1>
+
+                    <ul class="entry-meta">
+                        <li class="date">@Model.PublishDate</li>
+                        <li class="cat">@Model.ChannelName</li>
+                    </ul>
+
+                    <div class="detail-body">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div> <!-- end entry-primary -->
+
+                @*<div class="pagenav group">
+                    <div class="prev-nav">
+                        <a href="#" rel="prev">
+                            <span>上一篇</span>
+                            没有了
+                        </a>
+                    </div>
+                    <div class="next-nav">
+                        <a href="#" rel="next">
+                            <span>下一篇</span>
+                            没有了
+                        </a>
+                    </div>
+                </div>*@
+
+            </article>
+
+
+        </div> <!-- end col-twelve -->
+    </div> <!-- end row -->
+
+
+</section>
+
+@section scripts{
+    <script>
+        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.detail-body').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(parse(html));
+        });
+
+        function parse(content) {
+        //支持的html标签
+        var html = function (end) {
+            return new RegExp('\\n*\\[' + (end || '') + '(pre|hr|div|span|p|table|thead|th|tbody|tr|td|ul|li|ol|li|dl|dt|dd|h2|h3|h4|h5)([\\s\\S]*?)\\]\\n*', 'g');
+        };
+        content = escape(content || '') //XSS
+            .replace(/img\[([^\s]+?)\]/g, function (img) {  //转义图片
+                return '<img src="https://todo369.top/FileServer' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
+            })
+            .replace(html(), '\<$1 $2\>').replace(html('/'), '\</$1\>') //转移HTML代码
+            .replace(/\n/g, '<br>')   
+        return content;
+        }
+
+        function escape(html) {
+            return String(html || '').replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
+                .replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+        }
+
+    </script>
+}
